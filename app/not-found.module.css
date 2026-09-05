@@ -1,0 +1,30 @@
+.notFoundWrapper {
+  text-align: center;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--destructive);
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 16px;
+  color: var(--grey1);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.homeLink {
+  text-decoration: none;
+}
