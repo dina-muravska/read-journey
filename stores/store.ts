@@ -2,8 +2,8 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import axios from "axios";
-import type { User } from "../types/user";
+import { register, login, logout, getCurrentUser } from "../lib/api/clientApi";
+import type { User } from "@/types/user";
 import type { LoginRequest, RegisterRequest } from "@/types/auth";
 
 type AuthState = {
@@ -30,70 +30,53 @@ export const useAuthStore = create<AuthState>()(
       login: async (credentials) => {
         set({ isLoading: true, error: null });
         try {
-          const { data } = await axios.post("/api/users/signin", credentials);
-
+          const data = await login(credentials);
           set({
             user: { email: data.email, name: data.name },
             isLoading: false,
             error: null,
           });
-        } catch (err) {
-          const message =
-            axios.isAxiosError(err) && err.response?.data?.message
-              ? err.response.data.message
-              : "Login error";
-
+        } catch (err: unknown) {
+          const message = err instanceof Error ? err.message : "Login failed";
           set({ error: message, isLoading: false });
-          throw new Error(message);
+          throw err;
         }
       },
 
       register: async (userData) => {
         set({ isLoading: true, error: null });
         try {
-          const { data } = await axios.post("/api/users/signup", userData);
-
+          const data = await register(userData);
           set({
             user: { email: data.email, name: data.name },
             isLoading: false,
             error: null,
           });
-        } catch (err) {
+        } catch (err: unknown) {
           const message =
-            axios.isAxiosError(err) && err.response?.data?.message
-              ? err.response.data.message
-              : "Error during registration";
-
+            err instanceof Error ? err.message : "Registration failed";
           set({ error: message, isLoading: false });
-          throw new Error(message);
+          throw err;
         }
       },
 
       logout: async () => {
         set({ isLoading: true, error: null });
         try {
-          await axios.post("/api/users/signout");
+          await logout();
           set({ user: null, isLoading: false, error: null });
-        } catch (err) {
-          const message =
-            axios.isAxiosError(err) && err.response?.data?.message
-              ? err.response.data.message
-              : "Error while logging out";
-
+        } catch (err: unknown) {
+          const message = err instanceof Error ? err.message : "Logout failed";
           set({ error: message, isLoading: false });
         }
       },
 
       checkAuth: async () => {
         if (get().isChecked) return;
-
         set({ isLoading: true });
 
         try {
-          const { data } = await axios.get("/api/users/refresh", {
-            withCredentials: true,
-          });
-
+          const data = await getCurrentUser();
           set({
             user: { email: data.email, name: data.name },
             isChecked: true,
