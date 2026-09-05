@@ -1,0 +1,168 @@
+.main {
+  min-height: 100vh;
+  background-color: var(--black, #11101c);
+}
+
+.section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+.layoutWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 1440px) {
+  .layoutWrapper {
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+
+/* Ліва частина з формою */
+.leftSection {
+  background-color: var(--dark-grey, #1f1f1f);
+  border-radius: 30px;
+  width: 100%;
+  min-height: 412px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .leftSection {
+    min-width: 704px;
+    padding: 40px 64px;
+    gap: 24px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .leftSection {
+    min-width: 600px;
+    min-height: 736px;
+    gap: 40px;
+  }
+}
+
+/* Логотипи */
+.mobileLogo {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.desktopLogo {
+  display: none;
+  margin-bottom: 128px;
+}
+
+@media screen and (min-width: 768px) {
+  .mobileLogo {
+    display: none;
+  }
+
+  .desktopLogo {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .desktopLogo {
+    margin-bottom: 68px;
+  }
+}
+
+/* Заголовок */
+.title {
+  max-width: 444px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--foreground, #f9f9f9);
+  margin-bottom: 4px;
+}
+
+.highlightText {
+  color: var(--grey1, #686868);
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 64px;
+    margin-bottom: 16px;
+  }
+}
+
+/* Права частина з картинкою */
+.rightSection {
+  background-color: var(--dark-grey, #1f1f1f);
+  border-radius: 30px;
+  width: 100%;
+  min-height: 352px;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: block;
+}
+
+/* Ховаємо праву секцію на планшетах (від 768px до 1439px) */
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .rightSection {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .rightSection {
+    min-width: 600px;
+    min-height: 736px;
+    padding-top: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

@@ -1,0 +1,120 @@
+.form {
+  width: 100%;
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .inputsContainer {
+    gap: 14px;
+    margin-bottom: 82px;
+    width: 472px;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputField {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background-color: var(--grey3, #262626);
+  color: var(--foreground, #f9f9f9);
+  border: 1px solid transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 200ms ease;
+}
+
+.inputFieldError {
+  border-color: #e74a3b;
+}
+
+.inputLabel {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--grey1, #686868);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.errorMessage {
+  color: #e74a3b;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+@media screen and (min-width: 768px) {
+  .errorMessage {
+    font-size: 14px;
+  }
+}
+
+.actionsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 0;
+  border-radius: 30px;
+  background-color: var(--foreground, #f9f9f9);
+  color: #11101c;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity 200ms ease,
+    background-color 200ms ease;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.authLink {
+  color: var(--grey1, #686868);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: underline;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  transition: color 250ms ease;
+}
+
+.authLink:hover {
+  color: var(--foreground, #f9f9f9);
+}
+
+@media screen and (min-width: 768px) {
+  .authLink {
+    font-size: 14px;
+    line-height: 1.28;
+  }
+}
+
+.globalError {
+  margin-top: 8px;
+}

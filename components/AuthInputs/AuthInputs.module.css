@@ -1,0 +1,94 @@
+.fieldGroup {
+  width: 100%;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputField {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background-color: var(--grey3, #262626);
+  color: var(--foreground, #f9f9f9);
+  border: 1px solid transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 200ms ease;
+}
+
+.passwordInput {
+  padding-left: 160px;
+  padding-right: 48px;
+}
+
+.inputFieldError {
+  border-color: #e74a3b;
+}
+
+.inputLabel {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--grey1, #686868);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.toggleButton {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  outline: none;
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.toggleButton:focus-visible {
+  box-shadow: 0 0 0 2px var(--blue, #4f2ee8);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.errorMessage {
+  color: #e74a3b;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+@media screen and (min-width: 768px) {
+  .errorMessage {
+    font-size: 14px;
+  }
+}
