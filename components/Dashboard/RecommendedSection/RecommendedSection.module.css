@@ -1,0 +1,9 @@
+.loading {
+  color: #686868;
+  font-size: 14px;
+}
+
+.error {
+  color: #e85050;
+  font-size: 14px;
+}
