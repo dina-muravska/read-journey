@@ -44,7 +44,6 @@
   }
 }
 
-/* Ліва частина з формою */
 .leftSection {
   background-color: var(--dark-grey, #1f1f1f);
   border-radius: 30px;
@@ -74,7 +73,6 @@
   }
 }
 
-/* Логотипи */
 .mobileLogo {
   display: block;
   margin-bottom: 24px;
@@ -101,7 +99,6 @@
   }
 }
 
-/* Заголовок */
 .title {
   max-width: 444px;
   font-weight: 700;
@@ -123,7 +120,6 @@
   }
 }
 
-/* Права частина з картинкою */
 .rightSection {
   background-color: var(--dark-grey, #1f1f1f);
   border-radius: 30px;
@@ -135,7 +131,6 @@
   display: block;
 }
 
-/* Ховаємо праву секцію на планшетах (від 768px до 1439px) */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .rightSection {
     display: none;

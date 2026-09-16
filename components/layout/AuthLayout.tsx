@@ -21,9 +21,7 @@ export default function AuthLayout({
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.layoutWrapper}>
-            {/* Ліва сторона з формою */}
             <div className={styles.leftSection}>
-              {/* Мобільний логотип */}
               <Link href="/" aria-label="Go to home page">
                 <svg className={styles.mobileLogo} width="42" height="17">
                   <use
@@ -34,7 +32,6 @@ export default function AuthLayout({
                 </svg>
               </Link>
 
-              {/* Планшет / Десктоп логотип */}
               <Link href="/" aria-label="Go to home page">
                 <svg className={styles.desktopLogo} width="182" height="17">
                   <use
@@ -47,21 +44,17 @@ export default function AuthLayout({
 
               <h1 className={styles.title}>{title}</h1>
 
-              {/* Слот для форми */}
               {children}
             </div>
 
-            {/* Права сторона з картиною */}
             <div className={styles.rightSection}>
               <div className={styles.imageWrapper}>
                 <picture>
-                  {/* Десктоп */}
                   <source
                     srcSet="/img/iphone@1x.webp 1x, /img/iphone@2x.webp 2x"
                     media="(min-width: 1440px)"
                   />
 
-                  {/* Мобільний */}
                   <source
                     srcSet="/img/iphone-m@1x.webp 1x, /img/iphone-m@2x.webp 2x"
                     media="(max-width: 767px)"
