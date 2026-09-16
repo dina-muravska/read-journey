@@ -1,0 +1,181 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterLabel {
+  padding-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fbfbfb;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  background-color: #262626;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 14px 14px 14px 90px;
+  color: #fbfbfb;
+  font-size: 14px;
+  outline: none;
+}
+
+.inputAuthor {
+  padding-left: 100px;
+}
+
+.inputError {
+  border-color: #e85050;
+}
+
+.fieldLabel {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #686868;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.errorText {
+  color: #e85050;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.submitBtn {
+  margin-top: 12px;
+  background-color: transparent;
+  border: 1px solid rgba(251, 251, 251, 0.2);
+  color: #fbfbfb;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 120px;
+}
+
+.submitBtn:hover {
+  background-color: #fbfbfb;
+  color: #121212;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.workoutCard {
+  background-color: #262626;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.workoutTitle {
+  font-size: 18px;
+  color: #fbfbfb;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.workoutSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.workoutFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workoutLink {
+  color: #686868;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.quoteCard {
+  display: none;
+  background-color: #262626;
+  border-radius: 16px;
+  padding: 14px 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 1440px) {
+  .quoteCard {
+    display: flex;
+  }
+}
+
+.quoteText {
+  color: #686868;
+  font-size: 14px;
+  width: 220px;
+}
+
+.quoteHighlight {
+  color: #fbfbfb;
+}
+
+/* WorkoutStep styles */
+.stepItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.stepNumber {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #fbfbfb;
+  color: #121212;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .stepNumber {
+    font-size: 20px;
+  }
+}
+
+.stepText {
+  color: #fbfbfb;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+}
+
+.stepDescription {
+  color: #686868;
+}

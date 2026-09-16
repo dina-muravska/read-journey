@@ -6,8 +6,9 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import WorkoutStep from "@/components/Dashboard/WorkoutStep";
-import styles from "./Dashboard.module.css";
+import Image from "next/image";
+import WorkoutStep from "../WorkoutStep";
+import styles from "./RecommendedDashboard.module.css";
 
 type FilterFormValues = {
   title: string;
@@ -134,11 +135,11 @@ export default function RecommendedDashboard() {
       </div>
 
       <div className={styles.quoteCard}>
-        <img
+        <Image
           src="/img/books@1x.webp"
           alt="Books quote"
-          width="40"
-          height="40"
+          width={40}
+          height={40}
         />
         <p className={styles.quoteText}>
           "Books are <span className={styles.quoteHighlight}>windows</span> to
