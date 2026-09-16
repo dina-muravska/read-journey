@@ -1,0 +1,31 @@
+.listDefault {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .listDefault {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 27px 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .listDefault {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 27px 20px;
+  }
+}
+
+.listCompact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

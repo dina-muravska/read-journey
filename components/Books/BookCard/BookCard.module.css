@@ -1,0 +1,64 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.25s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background-color: #262626;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.title {
+  color: #fbfbfb;
+  font-weight: 700;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.titleDefault {
+  font-size: 14px;
+  line-height: 1.28;
+}
+
+.titleCompact {
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+.author {
+  color: #686868;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.authorDefault {
+  font-size: 12px;
+}
+
+.authorCompact {
+  font-size: 10px;
+}
