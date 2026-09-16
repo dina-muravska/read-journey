@@ -6,6 +6,11 @@ import {
   SignupResponse,
   MeResponse,
 } from "@/types/auth";
+import {
+  FetchRecommendedParams,
+  FetchRecommendedResponse,
+  BookDetailsResponse,
+} from "@/types/book";
 
 export const register = async (
   data: RegisterRequest,
@@ -71,5 +76,42 @@ export const refreshTokens = async (): Promise<SignupResponse> => {
       );
     }
     throw new Error("Refreshing token failed");
+  }
+};
+
+export const fetchRecommended = async (
+  params: FetchRecommendedParams,
+): Promise<FetchRecommendedResponse> => {
+  try {
+    const { data } = await nextServer.get<FetchRecommendedResponse>(
+      "/books/recommend",
+      { params },
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Fetching recommended books failed",
+      );
+    }
+    throw new Error("Fetching recommended books failed");
+  }
+};
+
+export const addBookToLibrary = async (
+  bookId: string,
+): Promise<BookDetailsResponse> => {
+  try {
+    const { data } = await nextServer.post<BookDetailsResponse>(
+      `/books/add/${bookId}`,
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Adding book to library failed",
+      );
+    }
+    throw new Error("Adding book to library failed");
   }
 };
