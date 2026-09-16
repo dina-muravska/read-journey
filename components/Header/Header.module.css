@@ -1,0 +1,230 @@
+.header {
+  height: 74px;
+  background-color: #121212;
+  padding-top: 16px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .header {
+    height: 106px;
+    padding-top: 32px;
+    margin-bottom: 16px;
+  }
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #1f1f1f;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 16px 20px;
+  }
+}
+
+.desktopNav {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: block;
+  }
+}
+
+.navList {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  font-size: 16px;
+  font-weight: 500;
+  color: #686868;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #fbfbfb;
+}
+
+.navLinkActive {
+  color: #fbfbfb;
+}
+
+.navLinkActive::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #30b94d;
+  border-radius: 2px;
+}
+
+.userBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .userBar {
+    gap: 16px;
+  }
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #262626;
+  border: 1px solid #686868;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fbfbfb;
+  text-transform: uppercase;
+}
+
+.userName {
+  display: none;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fbfbfb;
+}
+
+@media (min-width: 1440px) {
+  .userName {
+    display: inline;
+  }
+}
+
+.logoutBtn {
+  display: none;
+  background-color: transparent;
+  border: 1px solid rgba(251, 251, 251, 0.2);
+  color: #fbfbfb;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .logoutBtn {
+    display: block;
+  }
+}
+
+.logoutBtn:hover {
+  background-color: #fbfbfb;
+  color: #121212;
+}
+
+.burgerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .burgerBtn {
+    display: none;
+  }
+}
+
+/* Mobile Drawer */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+  .overlay {
+    display: none;
+  }
+}
+
+.drawer {
+  position: relative;
+  margin-left: auto;
+  width: 50%;
+  height: 100%;
+  background-color: #262626;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 280px 56px 40px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 41px;
+  right: 47px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.drawerContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 64px;
+  align-items: flex-start;
+  margin: 0 auto;
+}
+
+.mobileNavList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobileLogoutBtn {
+  margin-top: auto;
+  background-color: transparent;
+  border: 1px solid rgba(251, 251, 251, 0.2);
+  color: #fbfbfb;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #1f1f1f;
+  border-radius: 30px;
+  padding: 40px 20px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 40px;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+@media (min-width: 768px) {
+  .header {
+    margin-bottom: 20px;
+  }
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  color: #fbfbfb;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
+.errorText {
+  color: #e85050;
+  font-size: 14px;
+}
