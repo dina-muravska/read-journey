@@ -1,12 +1,22 @@
-import MainLayout from "@/components/MainLayout";
+// import MainLayout from "@/components/MainLayout";
+// import Dashboard from "@/components/Dashboard/Dashboard";
+// import LibraryDashboard from "@/components/Dashboard/LibraryDashboard/LibraryDashboard";
+// import MyLibrary from "@/components/MyLibrary/MyLibrary";
+// import styles from "./page.module.css";
 
-export default function LibraryPage() {
-  return (
-    <MainLayout>
-      <section>
-        <h1>My Library</h1>
-        <p>Your saved books will appear here.</p>
-      </section>
-    </MainLayout>
-  );
-}
+// export default async function LibraryPage() {
+//   return (
+//     <MainLayout>
+//       <section className={styles.section}>
+//         <div className={styles.container}>
+//           <Dashboard>
+//             <LibraryDashboard />
+//           </Dashboard>
+//           <div className={styles.content}>
+//             <MyLibrary />
+//           </div>
+//         </div>
+//       </section>
+//     </MainLayout>
+//   );
+// }
