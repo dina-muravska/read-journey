@@ -21,17 +21,28 @@ export default function BookCard({ book, variant = "default" }: Props) {
   };
 
   const isCompact = variant === "compact";
-  const titleClass = `${styles.title} ${isCompact ? styles.titleCompact : styles.titleDefault}`;
-  const authorClass = `${styles.author} ${isCompact ? styles.authorCompact : styles.authorDefault}`;
+
+  const cardClass = `${styles.card} ${
+    isCompact ? styles.cardCompact : styles.cardDefault
+  }`;
+  const imageContainerClass = `${styles.imageContainer} ${
+    isCompact ? styles.imageContainerCompact : styles.imageContainerDefault
+  }`;
+  const titleClass = `${styles.title} ${
+    isCompact ? styles.titleCompact : styles.titleDefault
+  }`;
+  const authorClass = `${styles.author} ${
+    isCompact ? styles.authorCompact : styles.authorDefault
+  }`;
 
   return (
-    <div className={styles.card} onClick={handleOpen}>
-      <div className={styles.imageContainer}>
+    <div className={cardClass} onClick={handleOpen}>
+      <div className={imageContainerClass}>
         <Image
           src={book.imageUrl}
           alt={book.title}
           fill
-          sizes="(max-width: 768px) 50vw, (max-width: 1440px) 25vw, 20vw"
+          sizes={isCompact ? "71px" : "137px"}
           className={styles.image}
         />
       </div>

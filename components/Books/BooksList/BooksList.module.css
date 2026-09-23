@@ -1,7 +1,8 @@
 .listDefault {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 137px);
   gap: 21px 20px;
+  justify-content: start;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -9,14 +10,14 @@
 
 @media (min-width: 768px) {
   .listDefault {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 137px);
     gap: 27px 20px;
   }
 }
 
 @media (min-width: 1440px) {
   .listDefault {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 137px);
     gap: 27px 20px;
   }
 }
@@ -25,7 +26,7 @@
   display: grid;
   grid-template-columns: repeat(3, 71px);
   gap: 20px 8px;
-  justify-content: space-between;
+  justify-content: start;
   list-style: none;
   padding: 0;
   margin: 0;

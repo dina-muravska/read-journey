@@ -3,6 +3,14 @@
   flex-direction: column;
   cursor: pointer;
   transition: transform 0.25s ease-in-out;
+  box-sizing: border-box;
+}
+
+.cardDefault {
+  width: 137px;
+}
+
+.cardCompact {
   width: 71px;
 }
 
@@ -12,48 +20,66 @@
 
 .imageContainer {
   position: relative;
-  width: 71px;
-  height: 107px;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 8px;
   background-color: #262626;
 }
 
+.imageContainerDefault {
+  width: 137px;
+  height: 205px;
+}
+
+.imageContainerCompact {
+  width: 71px;
+  height: 107px;
+}
+
 .image {
   object-fit: cover;
   border-radius: 8px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.card:hover .image {
-  transform: scale(1.05);
 }
 
 .title {
   color: #fbfbfb;
   font-weight: 700;
-  margin-bottom: 2px;
+  margin: 0 0 2px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  display: block;
+}
+
+.titleDefault {
+  width: 137px;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 .titleCompact {
+  width: 71px;
   font-size: 10px;
   line-height: 1.2;
 }
 
 .author {
   color: #686868;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  display: block;
+}
+
+.authorDefault {
+  width: 137px;
+  font-size: 12px;
+  line-height: 1.2;
 }
 
 .authorCompact {
+  width: 71px;
   font-size: 10px;
   line-height: 1.2;
 }
