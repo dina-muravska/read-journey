@@ -10,6 +10,7 @@ import {
   FetchRecommendedParams,
   FetchRecommendedResponse,
   BookDetailsResponse,
+  BookObject,
 } from "@/types/book";
 
 export const register = async (
@@ -113,5 +114,133 @@ export const addBookToLibrary = async (
       );
     }
     throw new Error("Adding book to library failed");
+  }
+};
+
+export const fetchLibraryBooks = async (
+  status?: number,
+): Promise<BookDetailsResponse[]> => {
+  try {
+    const { data } = await nextServer.get<BookDetailsResponse[]>("/books/own", {
+      params: status !== undefined ? { status } : undefined,
+    });
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Fetching library books failed",
+      );
+    }
+    throw new Error("Fetching library books failed");
+  }
+};
+
+export const fetchBookDetails = async (
+  bookId: string,
+): Promise<BookDetailsResponse> => {
+  try {
+    const { data } = await nextServer.get<BookDetailsResponse>(
+      `/books/${bookId}`,
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Fetching book details failed",
+      );
+    }
+    throw new Error("Fetching book details failed");
+  }
+};
+
+export const removeBookFromLibrary = async (bookId: string): Promise<void> => {
+  try {
+    await nextServer.delete(`/books/remove/${bookId}`);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Removing book from library failed",
+      );
+    }
+    throw new Error("Removing book from library failed");
+  }
+};
+
+export const addBookAsObjectToLibrary = async (
+  book: BookObject,
+): Promise<BookDetailsResponse> => {
+  try {
+    const { data } = await nextServer.post<BookDetailsResponse>(
+      "/books/add",
+      book,
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Adding custom book failed",
+      );
+    }
+    throw new Error("Adding custom book failed");
+  }
+};
+
+export const startReading = async (
+  bookId: string,
+  page: number,
+): Promise<BookDetailsResponse> => {
+  try {
+    const { data } = await nextServer.post<BookDetailsResponse>(
+      "/books/reading/start",
+      { id: bookId, page },
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Starting reading failed",
+      );
+    }
+    throw new Error("Starting reading failed");
+  }
+};
+
+export const finishReading = async (
+  bookId: string,
+  page: number,
+): Promise<BookDetailsResponse> => {
+  try {
+    const { data } = await nextServer.post<BookDetailsResponse>(
+      "/books/reading/finish",
+      { id: bookId, page },
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Finishing reading failed",
+      );
+    }
+    throw new Error("Finishing reading failed");
+  }
+};
+
+export const deleteReading = async (
+  bookId: string,
+  readingId: string,
+): Promise<BookDetailsResponse> => {
+  try {
+    const { data } = await nextServer.delete<BookDetailsResponse>(
+      "/books/reading",
+      { params: { bookId, readingId } },
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Deleting reading failed",
+      );
+    }
+    throw new Error("Deleting reading failed");
   }
 };
