@@ -98,6 +98,13 @@ export default function BookModal({
     return "";
   })();
 
+  const buttonClasses = [
+    styles.actionBtn,
+    actionPending ? styles.actionBtnPending : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div ref={backdropRef} className={styles.backdrop} onClick={onClose}>
       <div
@@ -114,23 +121,22 @@ export default function BookModal({
         </button>
 
         <div className={styles.content}>
-          <div className={styles.imageWrapper}>
+          <div className={styles.coverContainer}>
             {book.imageUrl ? (
               <Image
                 src={book.imageUrl}
                 alt={book.title}
                 fill
-                sizes="(max-width: 768px) 140px, 153px"
-                className="object-cover"
+                className={styles.coverImage}
               />
             ) : (
-              <div className={styles.imagePlaceholder}>
-                <span>📖</span>
+              <div className={styles.placeholder}>
+                <span className={styles.placeholderIcon}>📖</span>
               </div>
             )}
           </div>
 
-          <div className={styles.info}>
+          <div className={styles.metaInfo}>
             <h2 className={styles.title}>{book.title}</h2>
             <p className={styles.author}>{book.author}</p>
             <p className={styles.pages}>{book.totalPages} pages</p>
@@ -139,7 +145,7 @@ export default function BookModal({
           <button
             onClick={onAction}
             disabled={actionPending}
-            className={styles.actionButton}
+            className={buttonClasses}
           >
             {buttonText}
           </button>
