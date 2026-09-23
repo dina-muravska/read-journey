@@ -39,7 +39,7 @@ export default async function RecommendedBooks({ searchParams }: Props) {
       </div>
 
       <Suspense fallback={<BooksListSkeleton />}>
-        <BooksList books={data.results} />
+        <BooksList books={data.results} variant="compact" />
       </Suspense>
 
       <RecommendedBookModal books={data.results} />

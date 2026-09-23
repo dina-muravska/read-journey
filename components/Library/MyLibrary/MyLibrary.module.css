@@ -1,0 +1,39 @@
+.card {
+  background-color: #1f1f1f;
+  border-radius: 30px;
+  padding: 40px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 40px;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fbfbfb;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
+.textHighlight {
+  color: #686868;
+}

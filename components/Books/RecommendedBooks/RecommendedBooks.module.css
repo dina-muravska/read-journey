@@ -3,7 +3,9 @@
   flex-direction: column;
   background-color: #1f1f1f;
   border-radius: 30px;
-  padding: 40px 20px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -18,11 +20,13 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 22px;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
   .header {
     margin-bottom: 20px;
+    align-items: center;
   }
 }
 
@@ -32,6 +36,7 @@
   line-height: 1.14;
   letter-spacing: -0.02em;
   color: #fbfbfb;
+  white-space: nowrap;
 }
 
 @media (min-width: 768px) {
@@ -43,4 +48,6 @@
 .errorText {
   color: #e85050;
   font-size: 14px;
+  text-align: center;
+  padding: 20px;
 }
