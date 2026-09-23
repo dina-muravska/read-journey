@@ -17,7 +17,7 @@ export default function RecommendedSection() {
         setIsLoading(true);
         const data = await fetchRecommended({ page: 1, limit: 3 });
         setBooks((data.results as RecommendedBook[]) || []);
-      } catch (error) {
+      } catch {
         setIsError(true);
       } finally {
         setIsLoading(false);

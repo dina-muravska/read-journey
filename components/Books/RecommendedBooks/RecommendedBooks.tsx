@@ -1,4 +1,4 @@
-import { fetchRecommendedServer } from "@/lib/api/clientApi";
+import { fetchRecommendedServer } from "@/lib/api/server";
 import BooksList from "../../Books/BooksList/BooksList";
 import Pagination from "../../Books/Pagination/Pagination";
 import BooksListSkeleton from "../../Books/BooksListSkeleton/BooksListSkeleton";
@@ -42,7 +42,7 @@ export default async function RecommendedBooks({ searchParams }: Props) {
         <BooksList books={data.results} />
       </Suspense>
 
-      <RecommendedBookModal />
+      <RecommendedBookModal books={data.results} />
     </div>
   );
 }

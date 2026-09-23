@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import type { ObjectSchema } from "yup";
@@ -47,6 +48,7 @@ const authSchema: ObjectSchema<AuthFormValues> = yup.object({
 
 export default function AuthForm({ type }: Props) {
   const [localError, setLocalError] = useState("");
+  const router = useRouter();
   const {
     login,
     register: registerUser,
@@ -82,7 +84,7 @@ export default function AuthForm({ type }: Props) {
           password: data.password,
         });
       }
-      window.location.href = "/recommended";
+      router.push("/recommended");
     } catch (err: unknown) {
       const message =
         err instanceof Error

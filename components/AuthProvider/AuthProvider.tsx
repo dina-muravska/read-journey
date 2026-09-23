@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "@/stores/store";
 import { usePathname, useRouter } from "next/navigation";
 
-const publicRoutes = ["/login", "/register", "/"];
+const publicRoutes = ["/login", "/register"];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { checkAuth, user, isLoading, isChecked } = useAuthStore();
@@ -20,7 +20,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isChecked || isLoading) return;
 
-    const isPublic = publicRoutes.some((r) => pathname.startsWith(r));
+    const isPublic =
+      pathname === "/" ||
+      publicRoutes.some(
+        (route) => pathname === route || pathname.startsWith(`${route}/`),
+      );
 
     if (!user && !isPublic) {
       router.replace("/login");

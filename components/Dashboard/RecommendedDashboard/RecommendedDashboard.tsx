@@ -142,8 +142,8 @@ export default function RecommendedDashboard() {
           height={40}
         />
         <p className={styles.quoteText}>
-          "Books are <span className={styles.quoteHighlight}>windows</span> to
-          the world, and reading is a journey into the unknown."
+          &quot;Books are <span className={styles.quoteHighlight}>windows</span>{" "}
+          to the world, and reading is a journey into the unknown.&quot;
         </p>
       </div>
     </div>

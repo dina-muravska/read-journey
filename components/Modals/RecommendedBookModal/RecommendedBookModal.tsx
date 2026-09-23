@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import BookModal from "@/components/Modals/BookModal/BookModal";
+import { addBookToLibrary } from "@/lib/api/clientApi";
 import { RecommendedBook } from "@/types/book";
 import styles from "./RecommendedBookModal.module.css";
 
@@ -15,7 +16,7 @@ export default function RecommendedBookModal({ books }: Props) {
   const router = useRouter();
   const bookId = searchParams.get("bookId");
 
-  const book = bookId ? books.find((b) => b.id === bookId) : undefined;
+  const book = bookId ? books.find((b) => b._id === bookId) : undefined;
 
   const [isPending, setIsPending] = useState(false);
 
@@ -31,21 +32,7 @@ export default function RecommendedBookModal({ books }: Props) {
     try {
       setIsPending(true);
 
-      const response = await fetch("/api/library/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          bookId: bookId,
-          title: book.title,
-          author: book.author,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add book");
-      }
+      await addBookToLibrary(bookId);
 
       handleClose();
       router.refresh();

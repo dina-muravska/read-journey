@@ -6,6 +6,16 @@ import { register, login, logout, getCurrentUser } from "../lib/api/clientApi";
 import type { User } from "@/types/user";
 import type { LoginRequest, RegisterRequest } from "@/types/auth";
 
+const setAuthCookies = (token: string, refreshToken: string) => {
+  document.cookie = `token=${encodeURIComponent(token)}; path=/; SameSite=Lax`;
+  document.cookie = `refreshToken=${encodeURIComponent(refreshToken)}; path=/; SameSite=Lax`;
+};
+
+const clearAuthCookies = () => {
+  document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
+  document.cookie = "refreshToken=; path=/; max-age=0; SameSite=Lax";
+};
+
 type AuthState = {
   user: User | null;
   isLoading: boolean;
@@ -31,6 +41,7 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           const data = await login(credentials);
+          setAuthCookies(data.token, data.refreshToken);
           set({
             user: { email: data.email, name: data.name },
             isLoading: false,
@@ -47,6 +58,7 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           const data = await register(userData);
+          setAuthCookies(data.token, data.refreshToken);
           set({
             user: { email: data.email, name: data.name },
             isLoading: false,
@@ -64,6 +76,7 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           await logout();
+          clearAuthCookies();
           set({ user: null, isLoading: false, error: null });
         } catch (err: unknown) {
           const message = err instanceof Error ? err.message : "Logout failed";
@@ -83,6 +96,7 @@ export const useAuthStore = create<AuthState>()(
             isLoading: false,
           });
         } catch {
+          clearAuthCookies();
           set({ user: null, isChecked: true, isLoading: false });
         }
       },
