@@ -3,6 +3,9 @@
   flex-direction: column;
   cursor: pointer;
   transition: transform 0.25s ease-in-out;
+  width: 100%;
+  max-width: 137px;
+  margin: 0 auto;
 }
 
 .card:hover {
@@ -12,7 +15,7 @@
 .imageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 3;
+  height: 208px;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 8px;
@@ -21,6 +24,7 @@
 
 .image {
   object-fit: cover;
+  border-radius: 8px;
   transition: transform 0.3s ease-in-out;
 }
 

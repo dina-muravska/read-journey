@@ -4,6 +4,14 @@
   gap: 20px;
 }
 
+@media (min-width: 768px) and (max-width: 1439px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
 .filterGroup {
   display: flex;
   flex-direction: column;
@@ -27,7 +35,7 @@
   background-color: #262626;
   border: 1px solid transparent;
   border-radius: 12px;
-  padding: 14px 14px 14px 90px;
+  padding: 14px 14px 14px 95px;
   color: #fbfbfb;
   font-size: 14px;
   outline: none;
@@ -66,7 +74,9 @@
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   width: 120px;
 }
 
@@ -75,15 +85,13 @@
   color: #121212;
 }
 
-.submitBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .workoutCard {
   background-color: #262626;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .workoutTitle {
@@ -110,15 +118,20 @@
   color: #686868;
   font-size: 14px;
   text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.workoutLink:hover {
+  color: #fbfbfb;
 }
 
 .quoteCard {
   display: none;
   background-color: #262626;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 14px 20px;
   align-items: center;
-  justify-content: space-between;
+  gap: 14px;
 }
 
 @media (min-width: 1440px) {
@@ -130,52 +143,9 @@
 .quoteText {
   color: #686868;
   font-size: 14px;
-  width: 220px;
+  line-height: 1.28;
 }
 
 .quoteHighlight {
   color: #fbfbfb;
-}
-
-/* WorkoutStep styles */
-.stepItem {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex: 1;
-}
-
-.stepNumber {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #fbfbfb;
-  color: #121212;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-  .stepNumber {
-    font-size: 20px;
-  }
-}
-
-.stepText {
-  color: #fbfbfb;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-}
-
-.stepDescription {
-  color: #686868;
 }

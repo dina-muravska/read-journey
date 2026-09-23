@@ -1,33 +1,34 @@
 .header {
-  height: 74px;
+  width: 100%;
   background-color: #121212;
-  padding-top: 16px;
+  padding: 16px 20px 0;
   margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .header {
-    height: 106px;
-    padding-top: 32px;
+    padding: 32px 32px 0;
     margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .header {
+    padding: 32px 16px 0;
   }
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 11px 20px;
   background-color: #1f1f1f;
   border-radius: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: 16px 20px;
-  }
+  box-sizing: border-box;
 }
 
 .desktopNav {
@@ -162,7 +163,6 @@
   }
 }
 
-/* Mobile Drawer */
 .overlay {
   position: fixed;
   inset: 0;
