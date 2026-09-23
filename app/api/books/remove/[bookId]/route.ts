@@ -1,11 +1,16 @@
 import { isAxiosError } from "axios";
-import { logErrorResponse } from "../../_utils/utils";
+import { logErrorResponse } from "@/app/api/_utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { api } from "../../api";
+import { api } from "@/app/api/api";
 
-export async function POST(request: NextRequest) {
-  const body = await request.json();
+type Props = {
+  params: Promise<{ bookId: string }>;
+};
+
+export async function DELETE(request: NextRequest, { params }: Props) {
+  const { bookId } = await params;
+
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
@@ -14,7 +19,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const apiRes = await api.post(`/books/add`, body, {
+    const apiRes = await api.delete(`/books/remove/${bookId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -28,7 +33,7 @@ export async function POST(request: NextRequest) {
         {
           error:
             error.response?.data?.message ||
-            `Adding book ${JSON.stringify(body)} to library failed`,
+            `Removing book ${bookId} from library failed`,
           response: error.response?.data,
         },
         { status: error.response?.status || 500 },

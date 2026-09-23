@@ -1,11 +1,10 @@
-import { isAxiosError } from "axios";
-import { logErrorResponse } from "../../_utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { api } from "../../api";
+import { isAxiosError } from "axios";
+import { logErrorResponse } from "../../_utils/utils";
 
-export async function POST(request: NextRequest) {
-  const body = await request.json();
+export async function GET(req: NextRequest) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
@@ -14,9 +13,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const apiRes = await api.post(`/books/add`, body, {
+    const statusParam = req.nextUrl.searchParams.get("status");
+    const status = statusParam ? Number(statusParam) : undefined;
+
+    const apiRes = await api.get("/books/own", {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      params: {
+        ...(status !== undefined && !isNaN(status) && { status }),
       },
     });
 
@@ -24,11 +29,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
+      console.error("Backend error (Own books):", error.response?.data);
       return NextResponse.json(
         {
-          error:
-            error.response?.data?.message ||
-            `Adding book ${JSON.stringify(body)} to library failed`,
+          error: error.message || "Fetching own books failed",
           response: error.response?.data,
         },
         { status: error.response?.status || 500 },
