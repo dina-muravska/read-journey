@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { isAxiosError } from "axios";
-import { nextServer } from "@/lib/api/api";
+import { api } from "../../api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     if (author) params.author = author;
     if (title) params.title = title;
 
-    const apiRes = await nextServer.get("/books/recommend", {
+    const apiRes = await api.get("/books/recommend", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

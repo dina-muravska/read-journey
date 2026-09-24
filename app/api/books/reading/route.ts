@@ -11,6 +11,8 @@ interface BackendErrorResponse {
   message?: string;
 }
 
+import { cookies } from "next/headers";
+
 export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -24,8 +26,21 @@ export async function DELETE(req: Request) {
       );
     }
 
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const authHeaders = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     try {
-      await api.get<Book>(`/books/${bookId}`);
+      await api.get<Book>(`/books/${bookId}`, authHeaders);
     } catch (err) {
       const error = err as AxiosError<BackendErrorResponse>;
 
@@ -42,6 +57,7 @@ export async function DELETE(req: Request) {
     }
 
     await api.delete("/books/reading", {
+      ...authHeaders,
       params: {
         bookId,
         readingId: progressId,

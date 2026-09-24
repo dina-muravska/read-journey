@@ -192,7 +192,7 @@ export const startReading = async (
   try {
     const { data } = await nextServer.post<BookDetailsResponse>(
       "/books/reading/start",
-      { id: bookId, page },
+      { bookId, page },
     );
     return data;
   } catch (error) {
@@ -212,7 +212,7 @@ export const finishReading = async (
   try {
     const { data } = await nextServer.post<BookDetailsResponse>(
       "/books/reading/finish",
-      { id: bookId, page },
+      { bookId, page },
     );
     return data;
   } catch (error) {

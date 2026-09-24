@@ -7,6 +7,8 @@ import {
 import { toast } from "sonner";
 import { BookObject, BookDetailsResponse } from "@/types/book";
 
+const LIBRARY_QUERY_KEY = ["library", "books"];
+
 const isBookInLibrary = (
   libraryBooks: BookDetailsResponse[] | undefined,
   title: string,
@@ -21,8 +23,8 @@ const isBookInLibrary = (
 
   return libraryBooks.some(
     (book) =>
-      book.title.trim().toLowerCase() === normalizedTitle &&
-      book.author.trim().toLowerCase() === normalizedAuthor,
+      book.title?.trim().toLowerCase() === normalizedTitle &&
+      book.author?.trim().toLowerCase() === normalizedAuthor,
   );
 };
 
@@ -39,10 +41,8 @@ export const useAddBookToLibrary = () => {
       title: string;
       author: string;
     }) => {
-      const cachedBooks = queryClient.getQueryData<BookDetailsResponse[]>([
-        "library",
-        "books",
-      ]);
+      const cachedBooks =
+        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
 
       if (isBookInLibrary(cachedBooks, title, author)) {
         throw new Error(
@@ -53,14 +53,8 @@ export const useAddBookToLibrary = () => {
       return addBookToLibrary(bookId);
     },
     onSuccess: async () => {
-      await queryClient.refetchQueries({
-        queryKey: ["library", "books"],
-      });
-
-      await queryClient.refetchQueries({
-        queryKey: ["books"],
-      });
-
+      await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: ["books"] });
       toast.success("Book added to library! 📚");
     },
     onError: (error: Error) => {
@@ -74,10 +68,8 @@ export const useAddBookAsObjectToLibrary = () => {
 
   return useMutation({
     mutationFn: async (book: BookObject) => {
-      const cachedBooks = queryClient.getQueryData<BookDetailsResponse[]>([
-        "library",
-        "books",
-      ]);
+      const cachedBooks =
+        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
 
       if (isBookInLibrary(cachedBooks, book.title, book.author)) {
         throw new Error(
@@ -88,14 +80,8 @@ export const useAddBookAsObjectToLibrary = () => {
       return addBookAsObjectToLibrary(book);
     },
     onSuccess: async () => {
-      await queryClient.refetchQueries({
-        queryKey: ["library", "books"],
-      });
-
-      await queryClient.refetchQueries({
-        queryKey: ["books"],
-      });
-
+      await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: ["books"] });
       toast.success("Book added to library! 📚");
     },
     onError: (error: Error) => {
@@ -109,10 +95,8 @@ export const useAddBookAsObjectToLibraryOptimistic = () => {
 
   return useMutation({
     mutationFn: async (book: BookObject) => {
-      const cachedBooks = queryClient.getQueryData<BookDetailsResponse[]>([
-        "library",
-        "books",
-      ]);
+      const cachedBooks =
+        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
 
       if (isBookInLibrary(cachedBooks, book.title, book.author)) {
         throw new Error(
@@ -124,25 +108,24 @@ export const useAddBookAsObjectToLibraryOptimistic = () => {
     },
 
     onMutate: async (newBook) => {
-      await queryClient.cancelQueries({
-        queryKey: ["library", "books"],
-      });
+      await queryClient.cancelQueries({ queryKey: LIBRARY_QUERY_KEY });
 
-      const previousBooks = queryClient.getQueryData(["library", "books"]);
+      const previousBooks =
+        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
 
       const optimisticBook: BookDetailsResponse = {
         _id: `temp-${Date.now()}`,
-        title: newBook.title,
-        author: newBook.author,
+        title: newBook.title.trim(),
+        author: newBook.author.trim(),
         imageUrl: "",
         totalPages: newBook.totalPages,
-        status: "unread" as const,
+        status: "unread",
         owner: "me",
         progress: [],
       };
 
       queryClient.setQueryData(
-        ["library", "books"],
+        LIBRARY_QUERY_KEY,
         (old: BookDetailsResponse[] | undefined) =>
           Array.isArray(old) ? [optimisticBook, ...old] : [optimisticBook],
       );
@@ -152,35 +135,41 @@ export const useAddBookAsObjectToLibraryOptimistic = () => {
 
     onError: (error: Error, _, context) => {
       if (context?.previousBooks) {
-        queryClient.setQueryData(["library", "books"], context.previousBooks);
+        queryClient.setQueryData(LIBRARY_QUERY_KEY, context.previousBooks);
       }
-
       toast.error(error.message || "Failed to add book");
     },
 
-    onSuccess: async (serverBook) => {
-      queryClient.setQueryData(
-        ["library", "books"],
-        (old: BookDetailsResponse[] | undefined) => {
-          if (!Array.isArray(old)) return [serverBook];
+    onSuccess: (serverData, newBook) => {
+      const addedBook: BookDetailsResponse =
+        (serverData as any)?.data || serverData;
 
-          return old.map((book) =>
-            book._id.startsWith("temp-") &&
-            book.title === serverBook.title &&
-            book.author === serverBook.author
-              ? serverBook
-              : book,
-          );
+      queryClient.setQueryData(
+        LIBRARY_QUERY_KEY,
+        (old: BookDetailsResponse[] | undefined) => {
+          if (!Array.isArray(old)) return [addedBook];
+
+          const updated = old.map((book) => {
+            if (
+              book._id.startsWith("temp-") &&
+              book.title.trim().toLowerCase() ===
+                newBook.title.trim().toLowerCase()
+            ) {
+              return { ...book, ...addedBook };
+            }
+            return book;
+          });
+
+          return updated;
         },
       );
 
       toast.success("Book added to library! 📚");
     },
 
-    onSettled: async () => {
-      await queryClient.refetchQueries({
-        queryKey: ["library", "books"],
-      });
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ["books"] });
     },
   });
 };
@@ -191,14 +180,8 @@ export const useRemoveBookFromLibrary = () => {
   return useMutation({
     mutationFn: (bookId: string) => removeBookFromLibrary(bookId),
     onSuccess: async () => {
-      await queryClient.refetchQueries({
-        queryKey: ["library", "books"],
-      });
-
-      await queryClient.refetchQueries({
-        queryKey: ["books"],
-      });
-
+      await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: ["books"] });
       toast.success("Book removed from library");
     },
     onError: (error: Error) => {
@@ -220,10 +203,8 @@ export const useAddBookToLibraryOptimistic = () => {
       title: string;
       author: string;
     }) => {
-      const cachedBooks = queryClient.getQueryData<BookDetailsResponse[]>([
-        "library",
-        "books",
-      ]);
+      const cachedBooks =
+        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
 
       if (isBookInLibrary(cachedBooks, title, author)) {
         throw new Error(
@@ -234,25 +215,24 @@ export const useAddBookToLibraryOptimistic = () => {
       return addBookToLibrary(bookId);
     },
     onMutate: async ({ title, author }) => {
-      await queryClient.cancelQueries({
-        queryKey: ["library", "books"],
-      });
+      await queryClient.cancelQueries({ queryKey: LIBRARY_QUERY_KEY });
 
-      const previousBooks = queryClient.getQueryData(["library", "books"]);
+      const previousBooks =
+        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
 
       const optimisticBook: BookDetailsResponse = {
         _id: `temp-${Date.now()}`,
-        title,
-        author,
+        title: title.trim(),
+        author: author.trim(),
         imageUrl: "",
         totalPages: 0,
-        status: "unread" as const,
+        status: "unread",
         owner: "me",
         progress: [],
       };
 
       queryClient.setQueryData(
-        ["library", "books"],
+        LIBRARY_QUERY_KEY,
         (old: BookDetailsResponse[] | undefined) =>
           Array.isArray(old) ? [optimisticBook, ...old] : [optimisticBook],
       );
@@ -261,21 +241,24 @@ export const useAddBookToLibraryOptimistic = () => {
     },
     onError: (err: Error, _, context) => {
       if (context?.previousBooks) {
-        queryClient.setQueryData(["library", "books"], context.previousBooks);
+        queryClient.setQueryData(LIBRARY_QUERY_KEY, context.previousBooks);
       }
       toast.error(err.message || "Failed to add book");
     },
-    onSuccess: async (serverBook) => {
+    onSuccess: (serverData, variables) => {
+      const addedBook: BookDetailsResponse =
+        (serverData as any)?.data || serverData;
+
       queryClient.setQueryData(
-        ["library", "books"],
+        LIBRARY_QUERY_KEY,
         (old: BookDetailsResponse[] | undefined) => {
-          if (!Array.isArray(old)) return [serverBook];
+          if (!Array.isArray(old)) return [addedBook];
 
           return old.map((book) =>
             book._id.startsWith("temp-") &&
-            book.title === serverBook.title &&
-            book.author === serverBook.author
-              ? serverBook
+            book.title.trim().toLowerCase() ===
+              variables.title.trim().toLowerCase()
+              ? { ...book, ...addedBook }
               : book,
           );
         },
@@ -283,10 +266,9 @@ export const useAddBookToLibraryOptimistic = () => {
 
       toast.success("Book added to library! 📚");
     },
-    onSettled: async () => {
-      await queryClient.refetchQueries({
-        queryKey: ["library", "books"],
-      });
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ["books"] });
     },
   });
 };

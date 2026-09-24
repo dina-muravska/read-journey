@@ -4,17 +4,49 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { api } from "../../api";
 
+interface AddBookRequestBody {
+  title: string;
+  author: string;
+  totalPages: number | string;
+}
+
 export async function POST(request: NextRequest) {
-  const body = await request.json();
   try {
+    const body: AddBookRequestBody | null = await request
+      .json()
+      .catch(() => null);
+
+    if (!body || !body.title || !body.author || !body.totalPages) {
+      return NextResponse.json(
+        { message: "Title, author, and totalPages are required fields" },
+        { status: 400 },
+      );
+    }
+
+    const formattedBody = {
+      title: body.title,
+      author: body.author,
+      totalPages: Number(body.totalPages),
+    };
+
+    if (isNaN(formattedBody.totalPages) || formattedBody.totalPages <= 0) {
+      return NextResponse.json(
+        { message: "totalPages must be a positive number" },
+        { status: 400 },
+      );
+    }
+
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
     if (!token) {
-      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Not authenticated" },
+        { status: 401 },
+      );
     }
 
-    const apiRes = await api.post(`/books/add`, body, {
+    const apiRes = await api.post("/books/add", formattedBody, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -26,10 +58,8 @@ export async function POST(request: NextRequest) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         {
-          error:
-            error.response?.data?.message ||
-            `Adding book ${JSON.stringify(body)} to library failed`,
-          response: error.response?.data,
+          message:
+            error.response?.data?.message || "Adding book to library failed",
         },
         { status: error.response?.status || 500 },
       );
@@ -37,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { message: "Internal Server Error" },
       { status: 500 },
     );
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useAddBookAsObjectToLibraryOptimistic } from "@/lib/api/mutations/library";
+import { useAddBookAsObjectToLibrary } from "@/lib/api/mutations/library";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,8 +39,7 @@ export default function LibraryDashboard() {
     defaultValues: { title: "", author: "", totalPages: "" },
   });
 
-  const { mutateAsync: addBook, isPending } =
-    useAddBookAsObjectToLibraryOptimistic();
+  const { mutateAsync: addBook, isPending } = useAddBookAsObjectToLibrary();
 
   const [successModal, setSuccessModal] = useState({
     isOpen: false,

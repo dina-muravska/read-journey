@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { api } from "../../../app/api/api";
+import { nextServer } from "../api";
 
 interface StartReadingParams {
   bookId: string;
@@ -28,14 +28,29 @@ export function useStartReading() {
 
   return useMutation({
     mutationFn: async ({ bookId, page }: StartReadingParams) => {
-      const { data } = await api.post("/books/reading/start", { bookId, page });
+      const { data } = await nextServer.post("/books/reading/start", {
+        id: bookId,
+        page,
+      });
       return data;
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (updatedBook, variables) => {
+      if (updatedBook && updatedBook._id) {
+        queryClient.setQueryData(
+          ["library", "book", variables.bookId],
+          updatedBook,
+        );
+        queryClient.setQueryData(["book", variables.bookId], updatedBook);
+      }
+
       queryClient.invalidateQueries({
         queryKey: ["library", "book", variables.bookId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["book", variables.bookId],
+      });
       queryClient.invalidateQueries({ queryKey: ["library", "books"] });
+
       toast.success("Reading session started!");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
@@ -53,17 +68,30 @@ export function useFinishReading() {
 
   return useMutation({
     mutationFn: async ({ bookId, page }: FinishReadingParams) => {
-      const { data } = await api.post("/books/reading/finish", {
-        bookId,
+      // Бекенд очікує поле "id", а не "bookId"
+      const { data } = await nextServer.post("/books/reading/finish", {
+        id: bookId,
         page,
       });
       return data;
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (updatedBook, variables) => {
+      if (updatedBook && updatedBook._id) {
+        queryClient.setQueryData(
+          ["library", "book", variables.bookId],
+          updatedBook,
+        );
+        queryClient.setQueryData(["book", variables.bookId], updatedBook);
+      }
+
       queryClient.invalidateQueries({
         queryKey: ["library", "book", variables.bookId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["book", variables.bookId],
+      });
       queryClient.invalidateQueries({ queryKey: ["library", "books"] });
+
       toast.success("Reading session finished!");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
@@ -81,16 +109,28 @@ export function useDeleteReadingSession() {
 
   return useMutation({
     mutationFn: async ({ progressId, bookId }: DeleteReadingParams) => {
-      const { data } = await api.delete("/books/reading", {
+      const { data } = await nextServer.delete("/books/reading", {
         params: { readingId: progressId, bookId },
       });
       return data;
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (updatedBook, variables) => {
+      if (updatedBook && updatedBook._id) {
+        queryClient.setQueryData(
+          ["library", "book", variables.bookId],
+          updatedBook,
+        );
+        queryClient.setQueryData(["book", variables.bookId], updatedBook);
+      }
+
       queryClient.invalidateQueries({
         queryKey: ["library", "book", variables.bookId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["book", variables.bookId],
+      });
       queryClient.invalidateQueries({ queryKey: ["library", "books"] });
+
       toast.success("Reading session deleted");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
