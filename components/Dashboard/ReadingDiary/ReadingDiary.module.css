@@ -2,49 +2,121 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 384px;
+  max-height: 340px;
   overflow-y: auto;
-  padding-right: 8px;
+  padding-right: 2px;
+  background-color: #262626;
+  border-radius: 12px;
 }
 
 .item {
-  padding: 12px;
-  background-color: #262626;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
   align-items: center;
-  border: 1px solid #333333;
+  padding: 4px 0;
+  gap: 8px;
+}
+
+.leftSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.squareIndicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 2px solid #686868;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.activeSquare {
+  border-color: #fbfbfb;
+  background-color: #fbfbfb;
+}
+
+.dateCol {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .date {
-  font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.details {
   font-size: 12px;
-  color: #a3a3a3;
-  margin-top: 2px;
+  font-weight: 700;
+  color: #fbfbfb;
 }
 
-.activeText {
-  color: #30b94d;
+.percentage {
+  font-size: 12px;
+  font-weight: 600;
+  color: #686868;
+}
+
+.duration {
+  font-size: 11px;
+  color: #686868;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.pagesCount {
+  font-size: 12px;
+  color: #686868;
+  white-space: nowrap;
+}
+
+.graphWrapper {
+  width: 60px;
+  height: 18px;
+}
+
+.graphSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.speedText {
+  font-size: 10px;
+  color: #686868;
+  white-space: nowrap;
 }
 
 .deleteBtn {
   background: transparent;
   border: none;
-  color: #686868;
-  font-size: 16px;
   cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 4px 8px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
 }
 
-.deleteBtn:hover {
-  color: #e53e3e;
+@media (min-width: 768px) {
+  .item {
+    gap: 12px;
+  }
+
+  .date {
+    font-size: 14px;
+  }
+
+  .percentage {
+    font-size: 13px;
+  }
+}
+
+.deleteBtn:hover path {
+  stroke: #e53e3e;
 }
 
 .deleteBtn:disabled {

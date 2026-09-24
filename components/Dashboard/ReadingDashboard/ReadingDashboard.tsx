@@ -26,7 +26,6 @@ export default function ReadingDashboard({
   setViewMode,
 }: Props) {
   const activeTab = viewMode === "emptyprogress" ? "diary" : viewMode;
-
   const activeSession = book.progress.find((p) => p.status === "active");
   const isReading = !!activeSession;
 
@@ -84,18 +83,20 @@ export default function ReadingDashboard({
 
   return (
     <div className={styles.dashboard}>
-      <div className={styles.card}>
+      <div className={styles.leftCard}>
         <h3 className={styles.cardTitle}>
-          {isReading ? "Stop page" : "Start page"}
+          {isReading ? "Stop page:" : "Start page:"}
         </h3>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <label className={styles.label}>Page number:</label>
-          <input
-            type="number"
-            {...register("page")}
-            placeholder="0"
-            className={styles.input}
-          />
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Page number:</label>
+            <input
+              type="number"
+              {...register("page")}
+              placeholder="0"
+              className={styles.input}
+            />
+          </div>
           {errors.page && (
             <span className={styles.errorMessage}>{errors.page.message}</span>
           )}
@@ -103,57 +104,88 @@ export default function ReadingDashboard({
           <button
             type="submit"
             disabled={startMutation.isPending || finishMutation.isPending}
-            className={`${styles.submitBtn} ${
-              isReading ? styles.stopBtn : styles.startBtn
-            }`}
+            className={styles.actionBtn}
           >
             {isReading ? "To stop" : "To start"}
           </button>
         </form>
       </div>
 
-      <div className={styles.tabsHeader}>
-        <div className={styles.tabsGroup}>
-          <button
-            onClick={() => setViewMode("diary")}
-            className={`${styles.tabBtn} ${
-              activeTab === "diary" ? styles.activeTabBtn : ""
-            }`}
-          >
-            Diary
-          </button>
-          <button
-            onClick={() => setViewMode("statistics")}
-            className={`${styles.tabBtn} ${
-              activeTab === "statistics" ? styles.activeTabBtn : ""
-            }`}
-          >
-            Statistics
-          </button>
+      <div className={styles.rightCard}>
+        <div className={styles.header}>
+          <h3 className={styles.headerTitle}>
+            {activeTab === "diary" ? "Diary" : "Statistics"}
+          </h3>
+          <div className={styles.iconsGroup}>
+            <button
+              type="button"
+              onClick={() => setViewMode("diary")}
+              className={`${styles.iconBtn} ${
+                activeTab === "diary" ? styles.activeIconBtn : ""
+              }`}
+              title="Diary"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("statistics")}
+              className={`${styles.iconBtn} ${
+                activeTab === "statistics" ? styles.activeIconBtn : ""
+              }`}
+              title="Statistics"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+                <path d="M22 12A10 10 0 0 0 12 2v10z" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {book.progress.length === 0 ? (
-        <div className={styles.emptyState}>
-          <p className={styles.emptyStateTitle}>Progress timeline</p>
-          <p className={styles.emptyStateSub}>
-            Here you will see when and how many pages you read. To start, enter
-            the page number.
-          </p>
-        </div>
-      ) : activeTab === "diary" ? (
-        <ReadingDiary
-          bookId={book._id}
-          totalPages={book.totalPages}
-          progress={book.progress}
-        />
-      ) : (
-        <ReadingStatistics
-          totalPages={book.totalPages}
-          completedPages={completedPages}
-          progress={book.progress}
-        />
-      )}
+        {book.progress.length === 0 ? (
+          <div className={styles.emptyState}>
+            <p className={styles.emptyStateTitle}>Progress timeline</p>
+            <p className={styles.emptyStateSub}>
+              Here you will see when and how many pages you read. To start,
+              enter the page number.
+            </p>
+          </div>
+        ) : activeTab === "diary" ? (
+          <ReadingDiary
+            bookId={book._id}
+            totalPages={book.totalPages}
+            progress={book.progress}
+          />
+        ) : (
+          <ReadingStatistics
+            totalPages={book.totalPages}
+            completedPages={completedPages}
+            progress={book.progress}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -3,17 +3,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  width: 100%;
+  padding: 8px 0 4px;
+  gap: 24px;
   background-color: #262626;
   border-radius: 12px;
-  gap: 16px;
-  border: 1px solid #333333;
 }
 
 .chartWrapper {
   position: relative;
-  width: 128px;
-  height: 128px;
+  width: 156px;
+  height: 156px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,33 +26,48 @@
 }
 
 .bgCircle {
-  color: #333333;
+  stroke: #1f1f1f;
 }
 
 .progressCircle {
-  color: #30b94d;
-  transition: stroke-dasharray 0.3s ease;
+  stroke: #30b94d;
+  transition: stroke-dashoffset 0.5s ease;
 }
 
 .percentage {
   position: absolute;
   font-size: 20px;
   font-weight: 700;
-  color: #ffffff;
+  color: #fbfbfb;
 }
 
 .info {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.label {
-  font-size: 14px;
-  color: #686868;
-  margin-bottom: 4px;
+.statsBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.value {
+.greenDot {
+  width: 10px;
+  height: 10px;
+  background-color: #30b94d;
+  border-radius: 3px;
+}
+
+.badgeText {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fbfbfb;
+}
+
+.pagesRead {
+  font-size: 12px;
+  color: #686868;
 }

@@ -7,10 +7,9 @@ import styles from "./MyBook.module.css";
 
 type Props = {
   book: BookDetailsResponse;
-  isDiaryActive?: boolean;
 };
 
-export default function MyBook({ book, isDiaryActive }: Props) {
+export default function MyBook({ book }: Props) {
   const isReading = useMemo(() => {
     return book.progress?.some((p) => p.status === "active") || false;
   }, [book.progress]);
@@ -90,7 +89,7 @@ export default function MyBook({ book, isDiaryActive }: Props) {
       <div className={styles.header}>
         <h2 className={styles.title}>My reading</h2>
 
-        {!isDiaryActive && <div className={styles.timeLeft}>{timeLeft}</div>}
+        {timeLeft && <div className={styles.timeLeft}>{timeLeft}</div>}
       </div>
 
       <div className={styles.coverContainer}>

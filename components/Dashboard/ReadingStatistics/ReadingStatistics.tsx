@@ -14,40 +14,48 @@ export default function ReadingStatistics({
   totalPages,
   completedPages,
 }: Props) {
-  const percentage = Math.min(
-    100,
-    Math.round((completedPages / totalPages) * 100),
-  );
+  const rawPercentage = (completedPages / totalPages) * 100;
+  const percentage = Math.min(100, Math.round(rawPercentage));
+  const exactPercentage = Math.min(100, rawPercentage).toFixed(2);
+
+  // Окружність для SVG (r = 40 => C ≈ 251.32)
+  const radius = 40;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
     <div className={styles.container}>
       <div className={styles.chartWrapper}>
-        <svg className={styles.svg} viewBox="0 0 36 36">
-          <path
+        <svg className={styles.svg} viewBox="0 0 100 100">
+          <circle
             className={styles.bgCircle}
-            strokeWidth="3.8"
-            stroke="currentColor"
+            cx="50"
+            cy="50"
+            r={radius}
+            strokeWidth="10"
             fill="none"
-            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
           />
-          <path
+          <circle
             className={styles.progressCircle}
-            strokeDasharray={`${percentage}, 100`}
-            strokeWidth="3.8"
+            cx="50"
+            cy="50"
+            r={radius}
+            strokeWidth="10"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
-            stroke="currentColor"
             fill="none"
-            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
           />
         </svg>
         <div className={styles.percentage}>{percentage}%</div>
       </div>
 
       <div className={styles.info}>
-        <p className={styles.label}>Pages read</p>
-        <p className={styles.value}>
-          {completedPages} / {totalPages}
-        </p>
+        <div className={styles.statsBadge}>
+          <span className={styles.greenDot} />
+          <span className={styles.badgeText}>{exactPercentage}%</span>
+        </div>
+        <p className={styles.pagesRead}>{completedPages} pages read</p>
       </div>
     </div>
   );

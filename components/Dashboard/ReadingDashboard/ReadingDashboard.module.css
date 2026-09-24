@@ -1,46 +1,73 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 
-.card {
-  background-color: #262626;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid #333333;
+@media (max-width: 768px) {
+  .dashboard {
+    gap: 24px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .dashboard {
+    flex-direction: row;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .leftCard,
+  .rightCard {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.leftCard {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardTitle {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
   color: #fbfbfb;
+  margin-bottom: 14px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .label {
-  font-size: 14px;
-  color: #a3a3a3;
+  font-size: 12px;
+  color: #686868;
 }
 
 .input {
-  padding: 8px 12px;
-  border-radius: 8px;
-  background-color: #1f1f1f;
-  color: #ffffff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background-color: #262626;
+  color: #fbfbfb;
   border: 1px solid #333333;
   font-size: 14px;
   outline: none;
 }
 
 .input:focus {
-  border-color: #fbfbfb;
+  border-color: #686868;
 }
 
 .errorMessage {
@@ -48,64 +75,72 @@
   font-size: 12px;
 }
 
-.submitBtn {
-  padding: 10px 16px;
+.actionBtn {
+  align-self: flex-start;
+  padding: 12px 28px;
   border-radius: 30px;
-  color: #ffffff;
-  font-weight: 500;
-  border: none;
+  background: transparent;
+  color: #fbfbfb;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid rgba(251, 251, 251, 0.2);
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.startBtn {
-  background-color: #30b94d;
+.actionBtn:hover {
+  border-color: #fbfbfb;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-.stopBtn {
-  background-color: #e53e3e;
-}
-
-.submitBtn:hover {
-  opacity: 0.9;
-}
-
-.submitBtn:disabled {
+.actionBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.tabsHeader {
+.rightCard {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #333333;
-  padding-bottom: 8px;
+  margin-bottom: 20px;
 }
 
-.tabsGroup {
+.headerTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fbfbfb;
+}
+
+.iconsGroup {
   display: flex;
-  gap: 16px;
+  gap: 8px;
 }
 
-.tabBtn {
-  font-weight: 600;
-  font-size: 16px;
-  background: none;
+.iconBtn {
+  background: transparent;
   border: none;
   color: #686868;
   cursor: pointer;
-  padding-bottom: 4px;
+  padding: 4px;
+  transition: color 0.2s ease;
 }
 
-.activeTabBtn {
+.iconBtn:hover,
+.activeIconBtn {
   color: #fbfbfb;
-  border-bottom: 2px solid #fbfbfb;
 }
 
 .emptyState {
   text-align: center;
-  padding: 32px 0;
+  padding: 40px 20px;
   color: #686868;
 }
 

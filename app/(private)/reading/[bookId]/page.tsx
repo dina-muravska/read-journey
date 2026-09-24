@@ -97,7 +97,7 @@ export default function ReadingPage({ params }: PageProps) {
     <MainLayout>
       <section>
         <div className={styles.container}>
-          <Dashboard>
+          <Dashboard className={styles.sidebar}>
             <ReadingDashboard
               book={book}
               onBookCompleted={handleBookCompleted}
@@ -107,12 +107,7 @@ export default function ReadingPage({ params }: PageProps) {
           </Dashboard>
 
           <div className={styles.mainContent}>
-            <MyBook
-              book={book}
-              isDiaryActive={
-                viewMode === "diary" || viewMode === "emptyprogress"
-              }
-            />
+            <MyBook book={book} />
           </div>
         </div>
       </section>

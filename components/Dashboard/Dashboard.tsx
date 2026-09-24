@@ -5,8 +5,13 @@ import styles from "./Dashboard.module.css";
 
 type Props = {
   children: ReactNode;
+  className?: string;
 };
 
-export default function Dashboard({ children }: Props) {
-  return <aside className={styles.dashboard}>{children}</aside>;
+export default function Dashboard({ children, className }: Props) {
+  return (
+    <aside className={`${styles.dashboard} ${className ?? ""}`}>
+      {children}
+    </aside>
+  );
 }

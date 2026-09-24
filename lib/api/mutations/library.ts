@@ -9,6 +9,25 @@ import { BookObject, BookDetailsResponse } from "@/types/book";
 
 const LIBRARY_QUERY_KEY = ["library", "books"];
 
+interface ApiResponseWrapper {
+  data: BookDetailsResponse;
+}
+
+function extractBookResponse(
+  response: BookDetailsResponse | ApiResponseWrapper,
+): BookDetailsResponse {
+  if (
+    typeof response === "object" &&
+    response !== null &&
+    "data" in response &&
+    typeof response.data === "object" &&
+    response.data !== null
+  ) {
+    return response.data;
+  }
+  return response as BookDetailsResponse;
+}
+
 const isBookInLibrary = (
   libraryBooks: BookDetailsResponse[] | undefined,
   title: string,
@@ -141,8 +160,7 @@ export const useAddBookAsObjectToLibraryOptimistic = () => {
     },
 
     onSuccess: (serverData, newBook) => {
-      const addedBook: BookDetailsResponse =
-        (serverData as any)?.data || serverData;
+      const addedBook = extractBookResponse(serverData);
 
       queryClient.setQueryData(
         LIBRARY_QUERY_KEY,
@@ -246,8 +264,7 @@ export const useAddBookToLibraryOptimistic = () => {
       toast.error(err.message || "Failed to add book");
     },
     onSuccess: (serverData, variables) => {
-      const addedBook: BookDetailsResponse =
-        (serverData as any)?.data || serverData;
+      const addedBook = extractBookResponse(serverData);
 
       queryClient.setQueryData(
         LIBRARY_QUERY_KEY,
