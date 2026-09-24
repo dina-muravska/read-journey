@@ -1,18 +1,13 @@
 "use client";
 
 import React from "react";
+import { BookProgress } from "@/types/book";
 import styles from "./ReadingStatistics.module.css";
-
-interface ProgressItem {
-  id: string;
-  startPage: number;
-  finishPage?: number | null;
-}
 
 interface Props {
   totalPages: number;
   completedPages: number;
-  progress: ProgressItem[];
+  progress: BookProgress[];
 }
 
 export default function ReadingStatistics({

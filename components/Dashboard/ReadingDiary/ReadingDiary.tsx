@@ -2,21 +2,13 @@
 
 import React from "react";
 import { useDeleteReadingSession } from "@/lib/api/mutations/reading";
+import { BookProgress } from "@/types/book";
 import styles from "./ReadingDiary.module.css";
-
-interface ProgressItem {
-  id: string;
-  startPage: number;
-  finishPage?: number | null;
-  startReading: string;
-  finishReading?: string | null;
-  status: "active" | "inactive";
-}
 
 interface Props {
   bookId: string;
   totalPages: number;
-  progress: ProgressItem[];
+  progress: BookProgress[];
 }
 
 export default function ReadingDiary({ bookId, totalPages, progress }: Props) {
@@ -46,7 +38,7 @@ export default function ReadingDiary({ bookId, totalPages, progress }: Props) {
           : 0;
 
         return (
-          <div key={item.id} className={styles.item}>
+          <div key={item._id} className={styles.item}>
             <div>
               <div className={styles.date}>{startDate}</div>
               <div className={styles.details}>
@@ -64,7 +56,7 @@ export default function ReadingDiary({ bookId, totalPages, progress }: Props) {
 
             <button
               onClick={() =>
-                deleteMutation.mutate({ progressId: item.id, bookId })
+                deleteMutation.mutate({ progressId: item._id, bookId })
               }
               disabled={deleteMutation.isPending}
               className={styles.deleteBtn}

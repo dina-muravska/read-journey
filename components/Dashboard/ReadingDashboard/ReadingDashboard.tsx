@@ -1,38 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useStartReading, useFinishReading } from "@/lib/api/mutations/reading";
+import { BookDetailsResponse } from "@/types/book";
 import ReadingDiary from "../ReadingDiary/ReadingDiary";
 import ReadingStatistics from "../ReadingStatistics/ReadingStatistics";
 import styles from "./ReadingDashboard.module.css";
 
-interface ProgressItem {
-  id: string;
-  startPage: number;
-  finishPage?: number | null;
-  startReading: string;
-  finishReading?: string | null;
-  status: "active" | "inactive";
-}
-
-interface BookData {
-  id: string;
-  title: string;
-  author: string;
-  totalPages: number;
-  progress: ProgressItem[];
-}
-
 interface Props {
-  book: BookData;
+  book: BookDetailsResponse;
   onBookCompleted: () => void;
+  viewMode: "diary" | "statistics" | "emptyprogress";
+  setViewMode: React.Dispatch<
+    React.SetStateAction<"diary" | "statistics" | "emptyprogress">
+  >;
 }
 
-export default function ReadingDashboard({ book, onBookCompleted }: Props) {
-  const [activeTab, setActiveTab] = useState<"diary" | "statistics">("diary");
+export default function ReadingDashboard({
+  book,
+  onBookCompleted,
+  viewMode,
+  setViewMode,
+}: Props) {
+  const activeTab = viewMode === "emptyprogress" ? "diary" : viewMode;
 
   const activeSession = book.progress.find((p) => p.status === "active");
   const isReading = !!activeSession;
@@ -62,7 +55,7 @@ export default function ReadingDashboard({ book, onBookCompleted }: Props) {
   const onSubmit = (data: { page: number }) => {
     if (isReading) {
       finishMutation.mutate(
-        { bookId: book.id, page: data.page },
+        { bookId: book._id, page: data.page },
         {
           onSuccess: (res) => {
             reset();
@@ -74,7 +67,7 @@ export default function ReadingDashboard({ book, onBookCompleted }: Props) {
       );
     } else {
       startMutation.mutate(
-        { bookId: book.id, page: data.page },
+        { bookId: book._id, page: data.page },
         {
           onSuccess: () => reset(),
         },
@@ -122,7 +115,7 @@ export default function ReadingDashboard({ book, onBookCompleted }: Props) {
       <div className={styles.tabsHeader}>
         <div className={styles.tabsGroup}>
           <button
-            onClick={() => setActiveTab("diary")}
+            onClick={() => setViewMode("diary")}
             className={`${styles.tabBtn} ${
               activeTab === "diary" ? styles.activeTabBtn : ""
             }`}
@@ -130,7 +123,7 @@ export default function ReadingDashboard({ book, onBookCompleted }: Props) {
             Diary
           </button>
           <button
-            onClick={() => setActiveTab("statistics")}
+            onClick={() => setViewMode("statistics")}
             className={`${styles.tabBtn} ${
               activeTab === "statistics" ? styles.activeTabBtn : ""
             }`}
@@ -150,7 +143,7 @@ export default function ReadingDashboard({ book, onBookCompleted }: Props) {
         </div>
       ) : activeTab === "diary" ? (
         <ReadingDiary
-          bookId={book.id}
+          bookId={book._id}
           totalPages={book.totalPages}
           progress={book.progress}
         />
