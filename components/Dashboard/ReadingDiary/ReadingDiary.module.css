@@ -1,0 +1,53 @@
+.diaryList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 384px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.item {
+  padding: 12px;
+  background-color: #262626;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #333333;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.details {
+  font-size: 12px;
+  color: #a3a3a3;
+  margin-top: 2px;
+}
+
+.activeText {
+  color: #30b94d;
+}
+
+.deleteBtn {
+  background: transparent;
+  border: none;
+  color: #686868;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+}
+
+.deleteBtn:hover {
+  color: #e53e3e;
+}
+
+.deleteBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

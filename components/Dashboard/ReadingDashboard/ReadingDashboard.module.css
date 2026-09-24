@@ -1,0 +1,121 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background-color: #262626;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #333333;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fbfbfb;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-size: 14px;
+  color: #a3a3a3;
+}
+
+.input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #1f1f1f;
+  color: #ffffff;
+  border: 1px solid #333333;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #fbfbfb;
+}
+
+.errorMessage {
+  color: #e53e3e;
+  font-size: 12px;
+}
+
+.submitBtn {
+  padding: 10px 16px;
+  border-radius: 30px;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.startBtn {
+  background-color: #30b94d;
+}
+
+.stopBtn {
+  background-color: #e53e3e;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tabsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #333333;
+  padding-bottom: 8px;
+}
+
+.tabsGroup {
+  display: flex;
+  gap: 16px;
+}
+
+.tabBtn {
+  font-weight: 600;
+  font-size: 16px;
+  background: none;
+  border: none;
+  color: #686868;
+  cursor: pointer;
+  padding-bottom: 4px;
+}
+
+.activeTabBtn {
+  color: #fbfbfb;
+  border-bottom: 2px solid #fbfbfb;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 32px 0;
+  color: #686868;
+}
+
+.emptyStateTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fbfbfb;
+}
+
+.emptyStateSub {
+  font-size: 14px;
+  margin-top: 8px;
+}

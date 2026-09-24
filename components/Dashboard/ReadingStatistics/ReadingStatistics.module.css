@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: #262626;
+  border-radius: 12px;
+  gap: 16px;
+  border: 1px solid #333333;
+}
+
+.chartWrapper {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.bgCircle {
+  color: #333333;
+}
+
+.progressCircle {
+  color: #30b94d;
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.percentage {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.info {
+  text-align: center;
+}
+
+.label {
+  font-size: 14px;
+  color: #686868;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fbfbfb;
+}
