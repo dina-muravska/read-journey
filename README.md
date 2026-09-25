@@ -22,21 +22,23 @@ Read Journey is a web application designed for tracking personal reading activit
 - **Axios** — HTTP requests
 - **iziToast / React Hot Toast** — notification library
 
-###  Project Structure
+## 📁 Project Structure
 
+```text
 src/
-├── app/              # Next.js App Router (pages, layouts, and route handlers)
-│   ├── (auth)/       # Authentication routes (login, register)
-│   ├── library/      # Personal library page
-│   ├── reading/      # Active reading tracker page
-│   ├── layout.tsx    # Root layout & providers (React Query Provider)
-│   └── page.tsx      # Home / Recommended books page
-├── components/       # UI Components (modals, book cards, filters, header)
-├── hooks/            # Custom React hooks & React Query hooks
-├── services/         # Axios API instance and request functions
-├── types/            # TypeScript interfaces and type definitions
-├── styles/           # Standard CSS files / CSS Modules
-└── utils/            # Helper functions and constants
+├── app/                  # Next.js App Router (pages, layouts, and route handlers)
+│   ├── (auth)/           # Authentication routes (login, register)
+│   ├── library/          # Personal library page
+│   ├── reading/          # Active reading tracker page
+│   ├── layout.tsx        # Root layout & providers (React Query Provider)
+│   └── page.tsx          # Home / Recommended books page
+│
+├── components/           # UI Components (modals, book cards, filters, header)
+├── hooks/                # Custom hooks & React Query hooks
+├── services/             # Axios API instance and request functions
+├── types/                # TypeScript interfaces and type definitions
+├── styles/               # Standard CSS files / CSS Modules
+└── utils/                # Helper functions and constants
 
 
 ## 📦 Installation
@@ -54,6 +56,7 @@ Create a .env.local file in the root directory and add the API endpoint:
 Bash
 npm run dev
 Open http://localhost:3000 with your browser to see the result.
+
 
 ## 👨‍💻 Author
 
