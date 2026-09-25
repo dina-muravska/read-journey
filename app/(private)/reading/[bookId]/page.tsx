@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, use } from "react";
+import React, { useState, useCallback, use } from "react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import MainLayout from "@/components/MainLayout";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import ReadingDashboard from "@/components/Dashboard/ReadingDashboard/ReadingDashboard";
 import MyBook from "@/components/MyBook/MyBook";
 import BookCompletedModal from "@/components/Modals/BookCompletedModal/BookCompletedModal";
-import { BookDetailsResponse } from "@/types/book";
+import { nextServer } from "../../../../lib/api/api";
 import styles from "./reading.module.css";
 
 interface PageProps {
@@ -20,41 +21,23 @@ export default function ReadingPage({ params }: PageProps) {
 
   const router = useRouter();
 
-  const [book, setBook] = useState<BookDetailsResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [viewMode, setViewMode] = useState<
     "diary" | "statistics" | "emptyprogress"
   >("diary");
 
-  useEffect(() => {
-    if (!bookId) return;
-
-    const fetchBook = async () => {
-      try {
-        setIsLoading(true);
-        setError(false);
-
-        const res = await fetch(`/api/books/${bookId}`);
-
-        if (!res.ok) {
-          throw new Error("Book not found");
-        }
-
-        const data = await res.json();
-        setBook(data);
-      } catch (err) {
-        console.error("Failed to load book details:", err);
-        setError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBook();
-  }, [bookId]);
+  const {
+    data: book,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["book", bookId],
+    queryFn: async () => {
+      const { data } = await nextServer.get(`/books/${bookId}`);
+      return data;
+    },
+    enabled: !!bookId,
+  });
 
   const handleBookCompleted = useCallback(() => {
     setShowCompletedModal(true);
@@ -74,7 +57,7 @@ export default function ReadingPage({ params }: PageProps) {
     );
   }
 
-  if (error || !book) {
+  if (isError || !book) {
     return (
       <MainLayout>
         <div className={styles.centerWrapper}>

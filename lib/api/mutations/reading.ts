@@ -34,20 +34,22 @@ export function useStartReading() {
       });
       return data;
     },
-    onSuccess: (updatedBook, variables) => {
+    onSuccess: async (updatedBook, variables) => {
       if (updatedBook && updatedBook._id) {
+        queryClient.setQueryData(["book", variables.bookId], updatedBook);
         queryClient.setQueryData(
           ["library", "book", variables.bookId],
           updatedBook,
         );
-        queryClient.setQueryData(["book", variables.bookId], updatedBook);
       }
 
-      queryClient.invalidateQueries({
-        queryKey: ["library", "book", variables.bookId],
-      });
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["book", variables.bookId],
+        refetchType: "all",
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["library", "book", variables.bookId],
+        refetchType: "all",
       });
       queryClient.invalidateQueries({ queryKey: ["library", "books"] });
 
@@ -68,27 +70,28 @@ export function useFinishReading() {
 
   return useMutation({
     mutationFn: async ({ bookId, page }: FinishReadingParams) => {
-      // Бекенд очікує поле "id", а не "bookId"
       const { data } = await nextServer.post("/books/reading/finish", {
         id: bookId,
         page,
       });
       return data;
     },
-    onSuccess: (updatedBook, variables) => {
+    onSuccess: async (updatedBook, variables) => {
       if (updatedBook && updatedBook._id) {
+        queryClient.setQueryData(["book", variables.bookId], updatedBook);
         queryClient.setQueryData(
           ["library", "book", variables.bookId],
           updatedBook,
         );
-        queryClient.setQueryData(["book", variables.bookId], updatedBook);
       }
 
-      queryClient.invalidateQueries({
-        queryKey: ["library", "book", variables.bookId],
-      });
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["book", variables.bookId],
+        refetchType: "all",
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["library", "book", variables.bookId],
+        refetchType: "all",
       });
       queryClient.invalidateQueries({ queryKey: ["library", "books"] });
 
@@ -114,20 +117,22 @@ export function useDeleteReadingSession() {
       });
       return data;
     },
-    onSuccess: (updatedBook, variables) => {
+    onSuccess: async (updatedBook, variables) => {
       if (updatedBook && updatedBook._id) {
+        queryClient.setQueryData(["book", variables.bookId], updatedBook);
         queryClient.setQueryData(
           ["library", "book", variables.bookId],
           updatedBook,
         );
-        queryClient.setQueryData(["book", variables.bookId], updatedBook);
       }
 
-      queryClient.invalidateQueries({
-        queryKey: ["library", "book", variables.bookId],
-      });
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["book", variables.bookId],
+        refetchType: "all",
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["library", "book", variables.bookId],
+        refetchType: "all",
       });
       queryClient.invalidateQueries({ queryKey: ["library", "books"] });
 
