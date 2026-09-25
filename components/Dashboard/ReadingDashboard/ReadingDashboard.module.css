@@ -1,7 +1,7 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 40px;
 }
 
 .leftCard {
@@ -13,6 +13,48 @@
   gap: 40px;
 }
 
+@media (min-width: 768px) and (max-width: 1439px) {
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .leftCard {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 32px;
+    gap: 32px;
+  }
+
+  .formSection,
+  .emptyState,
+  .rightCardContent {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .dashboard {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .leftCard {
+    width: 313px;
+    flex-shrink: 0;
+    flex-direction: column;
+    padding: 20px;
+    gap: 40px;
+  }
+
+  .rightCard {
+    flex-grow: 1;
+  }
+}
+
 .formSection {
   display: flex;
   flex-direction: column;
@@ -22,7 +64,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #fbfbfb;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 
 .form {
@@ -84,7 +126,6 @@
   cursor: not-allowed;
 }
 
-/* Empty State / Progress Block */
 .emptyState {
   display: flex;
   flex-direction: column;
@@ -94,7 +135,7 @@
 .emptyStateText {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Зменшено відстань між тайтлом і описом */
+  gap: 8px;
 }
 
 .emptyStateTitle {
@@ -130,7 +171,6 @@
   box-sizing: border-box;
 }
 
-/* Active Progress / Diary Section */
 .rightCardContent {
   display: flex;
   flex-direction: column;
