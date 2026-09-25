@@ -8,9 +8,9 @@ type Props = {
 
 export default function MainLayout({ children }: Props) {
   return (
-    <>
+    <div className={styles.page}>
       <Header />
       <main className={styles.main}>{children}</main>
-    </>
+    </div>
   );
 }
