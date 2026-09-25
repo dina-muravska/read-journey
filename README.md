@@ -39,7 +39,7 @@ src/
 ├── types/                # TypeScript interfaces and type definitions
 ├── styles/               # Standard CSS files / CSS Modules
 └── utils/                # Helper functions and constants
-
+```
 
 ## 📦 Installation
 
@@ -56,7 +56,7 @@ Create a .env.local file in the root directory and add the API endpoint:
 Bash
 npm run dev
 Open http://localhost:3000 with your browser to see the result.
-
+```
 
 ## 👨‍💻 Author
 
