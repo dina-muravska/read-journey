@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 Read Journey
 
-## Getting Started
+## 📖 About the Project
 
-First, run the development server:
+Read Journey is a web application designed for tracking personal reading activity and managing a digital book collection. Users can discover recommended books, filter by title or author, build their personal library, set reading goals, and monitor their reading progress in real-time.
 
+---
+
+## 🖼️ Preview
+
+<img width="1280" height="772" alt="image" src="https://github.com/user-attachments/assets/a7e911c0-a6d6-482d-94e2-9f4f8f2851fa" />
+
+
+---
+
+## 🛠️ Technologies
+
+- **React / Next.js (TypeScript)** — App Router routing and strongly typed component architecture
+- **React Query (TanStack Query)** — data-fetching, caching, and server state management
+- **Formik & Yup** — form handling, management, and schema-based validation
+- **CSS3 / CSS Modules** — custom modular styling without third-party utility frameworks
+- **Axios** — HTTP requests
+- **iziToast / React Hot Toast** — notification library
+
+###  Project Structure
+
+src/
+├── app/              # Next.js App Router (pages, layouts, and route handlers)
+│   ├── (auth)/       # Authentication routes (login, register)
+│   ├── library/      # Personal library page
+│   ├── reading/      # Active reading tracker page
+│   ├── layout.tsx    # Root layout & providers (React Query Provider)
+│   └── page.tsx      # Home / Recommended books page
+├── components/       # UI Components (modals, book cards, filters, header)
+├── hooks/            # Custom React hooks & React Query hooks
+├── services/         # Axios API instance and request functions
+├── types/            # TypeScript interfaces and type definitions
+├── styles/           # Standard CSS files / CSS Modules
+└── utils/            # Helper functions and constants
+
+
+## 📦 Installation
+
+1. Clone the repository:
 ```bash
+git clone 
+Install dependencies:
+
+Bash
+npm install
+Set up your environment variables:
+Create a .env.local file in the root directory and add the API endpoint:
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000 with your browser to see the result.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 👨‍💻 Author
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Dina Muravska**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+GitHub: https://github.com/dina-muravska
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
