@@ -4,30 +4,16 @@
   gap: 28px;
 }
 
-@media (max-width: 768px) {
-  .dashboard {
-    gap: 24px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1439px) {
-  .dashboard {
-    flex-direction: row;
-    gap: 32px;
-    width: 100%;
-  }
-
-  .leftCard,
-  .rightCard {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-}
-
 .leftCard {
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
+  background-color: #1f1f1f;
+  padding: 20px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.formSection {
   display: flex;
   flex-direction: column;
 }
@@ -36,7 +22,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #fbfbfb;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .form {
@@ -98,10 +84,54 @@
   cursor: not-allowed;
 }
 
-.rightCard {
-  background-color: transparent;
+/* Empty State / Progress Block */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.emptyStateText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Зменшено відстань між тайтлом і описом */
+}
+
+.emptyStateTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fbfbfb;
+  margin: 0;
   padding: 0;
-  border-radius: 0;
+  line-height: 1.2;
+}
+
+.emptyStateSub {
+  font-size: 14px;
+  line-height: 1.28;
+  color: #686868;
+  margin: 0;
+  padding: 0;
+}
+
+.starCircle {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 50%;
+  background-color: #262626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  font-size: 38px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+/* Active Progress / Diary Section */
+.rightCardContent {
   display: flex;
   flex-direction: column;
 }
@@ -136,21 +166,4 @@
 .iconBtn:hover,
 .activeIconBtn {
   color: #fbfbfb;
-}
-
-.emptyState {
-  text-align: center;
-  padding: 40px 20px;
-  color: #686868;
-}
-
-.emptyStateTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: #fbfbfb;
-}
-
-.emptyStateSub {
-  font-size: 14px;
-  margin-top: 8px;
 }
