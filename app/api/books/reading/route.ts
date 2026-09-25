@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { AxiosError } from "axios";
 import { api } from "../../api";
+import { cookies } from "next/headers";
 
 interface Book {
   id: string;
@@ -11,17 +12,17 @@ interface BackendErrorResponse {
   message?: string;
 }
 
-import { cookies } from "next/headers";
-
 export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const progressId = searchParams.get("progressId");
+
+    const readingId =
+      searchParams.get("readingId") || searchParams.get("progressId");
     const bookId = searchParams.get("bookId");
 
-    if (!progressId || !bookId) {
+    if (!readingId || !bookId) {
       return NextResponse.json(
-        { error: "Missing required parameters: progressId and bookId" },
+        { error: "Missing required parameters: readingId and bookId" },
         { status: 400 },
       );
     }
@@ -60,7 +61,7 @@ export async function DELETE(req: Request) {
       ...authHeaders,
       params: {
         bookId,
-        readingId: progressId,
+        readingId,
       },
     });
 
