@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useMemo } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useStartReading, useFinishReading } from "@/lib/api/mutations/reading";
@@ -19,6 +19,10 @@ interface Props {
   >;
 }
 
+interface FormValues {
+  page: number;
+}
+
 export default function ReadingDashboard({
   book,
   onBookCompleted,
@@ -30,35 +34,59 @@ export default function ReadingDashboard({
   const isReading = !!activeSession;
   const hasProgress = book.progress.length > 0;
 
-  const schema = yup.object({
-    page: yup
-      .number()
-      .typeError("Please enter a number")
-      .required("Required field")
-      .positive("Must be greater than 0")
-      .integer("Must be an integer")
-      .max(book.totalPages, `Cannot exceed ${book.totalPages}`),
-  });
+  const schema = useMemo(() => {
+    return yup.object({
+      page: yup
+        .number()
+        .transform((value, originalValue) =>
+          originalValue === "" || originalValue === null || isNaN(originalValue)
+            ? undefined
+            : value,
+        )
+        .typeError("Please enter a number")
+        .required("Required field")
+        .positive("Must be greater than 0")
+        .integer("Must be an integer")
+        .max(book.totalPages, `Cannot exceed ${book.totalPages}`)
+        .test("min-page", function (value) {
+          if (
+            isReading &&
+            activeSession?.startPage !== undefined &&
+            value !== undefined
+          ) {
+            if (value < activeSession.startPage) {
+              return this.createError({
+                message: `Must be >= start page (${activeSession.startPage})`,
+              });
+            }
+          }
+          return true;
+        }),
+    });
+  }, [isReading, activeSession, book.totalPages]);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<{ page: number }>({
+  } = useForm<FormValues>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      page: undefined as unknown as number,
+    },
   });
 
   const startMutation = useStartReading();
   const finishMutation = useFinishReading();
 
-  const onSubmit = (data: { page: number }) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     if (isReading) {
       finishMutation.mutate(
         { bookId: book._id, page: data.page },
         {
           onSuccess: (res) => {
-            reset();
+            reset({ page: "" as unknown as number });
             if (res?.isCompleted) {
               onBookCompleted();
             }
@@ -69,7 +97,9 @@ export default function ReadingDashboard({
       startMutation.mutate(
         { bookId: book._id, page: data.page },
         {
-          onSuccess: () => reset(),
+          onSuccess: () => {
+            reset({ page: "" as unknown as number });
+          },
         },
       );
     }
@@ -94,9 +124,10 @@ export default function ReadingDashboard({
           <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <div className={styles.inputGroup}>
               <label className={styles.label}>Page number:</label>
+
               <input
                 type="number"
-                {...register("page")}
+                {...register("page", { valueAsNumber: true })}
                 placeholder="0"
                 className={styles.input}
               />

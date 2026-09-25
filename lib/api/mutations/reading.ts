@@ -34,24 +34,14 @@ export function useStartReading() {
       });
       return data;
     },
-    onSuccess: async (updatedBook, variables) => {
-      if (updatedBook && updatedBook._id) {
-        queryClient.setQueryData(["book", variables.bookId], updatedBook);
-        queryClient.setQueryData(
-          ["library", "book", variables.bookId],
-          updatedBook,
-        );
-      }
-
-      await queryClient.invalidateQueries({
-        queryKey: ["book", variables.bookId],
-        refetchType: "all",
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["library", "book", variables.bookId],
-        refetchType: "all",
-      });
-      queryClient.invalidateQueries({ queryKey: ["library", "books"] });
+    onSuccess: async (_, variables) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["book", variables.bookId] }),
+        queryClient.invalidateQueries({
+          queryKey: ["library", "book", variables.bookId],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["library", "books"] }),
+      ]);
 
       toast.success("Reading session started!");
     },
@@ -76,24 +66,14 @@ export function useFinishReading() {
       });
       return data;
     },
-    onSuccess: async (updatedBook, variables) => {
-      if (updatedBook && updatedBook._id) {
-        queryClient.setQueryData(["book", variables.bookId], updatedBook);
-        queryClient.setQueryData(
-          ["library", "book", variables.bookId],
-          updatedBook,
-        );
-      }
-
-      await queryClient.invalidateQueries({
-        queryKey: ["book", variables.bookId],
-        refetchType: "all",
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["library", "book", variables.bookId],
-        refetchType: "all",
-      });
-      queryClient.invalidateQueries({ queryKey: ["library", "books"] });
+    onSuccess: async (_, variables) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["book", variables.bookId] }),
+        queryClient.invalidateQueries({
+          queryKey: ["library", "book", variables.bookId],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["library", "books"] }),
+      ]);
 
       toast.success("Reading session finished!");
     },
@@ -117,24 +97,14 @@ export function useDeleteReadingSession() {
       });
       return data;
     },
-    onSuccess: async (updatedBook, variables) => {
-      if (updatedBook && updatedBook._id) {
-        queryClient.setQueryData(["book", variables.bookId], updatedBook);
-        queryClient.setQueryData(
-          ["library", "book", variables.bookId],
-          updatedBook,
-        );
-      }
-
-      await queryClient.invalidateQueries({
-        queryKey: ["book", variables.bookId],
-        refetchType: "all",
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["library", "book", variables.bookId],
-        refetchType: "all",
-      });
-      queryClient.invalidateQueries({ queryKey: ["library", "books"] });
+    onSuccess: async (_, variables) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["book", variables.bookId] }),
+        queryClient.invalidateQueries({
+          queryKey: ["library", "book", variables.bookId],
+        }),
+        queryClient.invalidateQueries({ queryKey: ["library", "books"] }),
+      ]);
 
       toast.success("Reading session deleted");
     },

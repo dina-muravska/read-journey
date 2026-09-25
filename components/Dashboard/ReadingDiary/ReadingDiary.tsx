@@ -21,7 +21,9 @@ export default function ReadingDiary({ bookId, totalPages, progress }: Props) {
 
   return (
     <div className={styles.diaryList}>
-      {sortedProgress.map((item, index) => {
+      {sortedProgress.map((item) => {
+        const isCompleted = item.status === "inactive" || !!item.finishPage;
+
         const pagesRead =
           item.finishPage && item.startPage
             ? item.finishPage - item.startPage + 1
@@ -50,20 +52,26 @@ export default function ReadingDiary({ bookId, totalPages, progress }: Props) {
             <div className={styles.leftSection}>
               <div
                 className={`${styles.squareIndicator} ${
-                  index === 0 ? styles.activeSquare : ""
+                  isCompleted ? styles.activeSquare : ""
                 }`}
               />
               <div className={styles.dateCol}>
                 <span className={styles.date}>{startDate}</span>
-                <span className={styles.percentage}>{percentage}%</span>
+                <span className={styles.percentage}>
+                  {isCompleted ? `${percentage}%` : "—"}
+                </span>
                 <span className={styles.duration}>
-                  {durationMinutes} minutes
+                  {isCompleted
+                    ? `${durationMinutes} minutes`
+                    : "In progress..."}
                 </span>
               </div>
             </div>
 
             <div className={styles.rightSection}>
-              <div className={styles.pagesCount}>{pagesRead} pages</div>
+              <div className={styles.pagesCount}>
+                {isCompleted ? `${pagesRead} pages` : "—"}
+              </div>
 
               <div className={styles.graphWrapper}>
                 <svg className={styles.graphSvg} viewBox="0 0 60 20">
@@ -76,7 +84,9 @@ export default function ReadingDiary({ bookId, totalPages, progress }: Props) {
               </div>
 
               <div className={styles.speedText}>
-                {pagesPerHour > 0 ? `${pagesPerHour} pages per hour` : "—"}
+                {isCompleted && pagesPerHour > 0
+                  ? `${pagesPerHour} pages per hour`
+                  : "—"}
               </div>
             </div>
 
