@@ -63,7 +63,7 @@ export const useAddBookToLibrary = () => {
     }) => {
       const cachedBooks = await queryClient.fetchQuery({
         queryKey: LIBRARY_QUERY_KEY,
-        queryFn: fetchLibraryBooks,
+        queryFn: () => fetchLibraryBooks(),
       });
 
       if (isBookInLibrary(cachedBooks, title, author)) {
@@ -74,7 +74,15 @@ export const useAddBookToLibrary = () => {
 
       return addBookToLibrary(bookId);
     },
-    onSuccess: async () => {
+    onSuccess: async (serverData) => {
+      const addedBook = extractBookResponse(serverData);
+      queryClient.setQueryData<BookDetailsResponse[]>(
+        LIBRARY_QUERY_KEY,
+        (books = []) =>
+          books.some((book) => book._id === addedBook._id)
+            ? books
+            : [addedBook, ...books],
+      );
       await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
       await queryClient.invalidateQueries({ queryKey: ["books"] });
       toast.success("Book added to library! 📚");
@@ -92,7 +100,7 @@ export const useAddBookAsObjectToLibrary = () => {
     mutationFn: async (book: BookObject) => {
       const cachedBooks = await queryClient.fetchQuery({
         queryKey: LIBRARY_QUERY_KEY,
-        queryFn: fetchLibraryBooks,
+        queryFn: () => fetchLibraryBooks(),
       });
 
       if (isBookInLibrary(cachedBooks, book.title, book.author)) {
@@ -103,7 +111,15 @@ export const useAddBookAsObjectToLibrary = () => {
 
       return addBookAsObjectToLibrary(book);
     },
-    onSuccess: async () => {
+    onSuccess: async (serverData) => {
+      const addedBook = extractBookResponse(serverData);
+      queryClient.setQueryData<BookDetailsResponse[]>(
+        LIBRARY_QUERY_KEY,
+        (books = []) =>
+          books.some((book) => book._id === addedBook._id)
+            ? books
+            : [addedBook, ...books],
+      );
       await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
       await queryClient.invalidateQueries({ queryKey: ["books"] });
       toast.success("Book added to library! 📚");
