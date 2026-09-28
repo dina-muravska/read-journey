@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { fetchRecommended } from "@/lib/api/clientApi";
 import BooksList from "../../Books/BooksList/BooksList";
+import RecommendedBookModal from "@/components/Modals/RecommendedBookModal/RecommendedBookModal";
 import { RecommendedBook } from "@/types/book";
 import styles from "./RecommendedSection.module.css";
 
@@ -37,5 +38,10 @@ export default function RecommendedSection() {
 
   if (books.length === 0) return null;
 
-  return <BooksList books={books} variant="compact" />;
+  return (
+    <>
+      <BooksList books={books} variant="compact" />
+      <RecommendedBookModal books={books} />
+    </>
+  );
 }

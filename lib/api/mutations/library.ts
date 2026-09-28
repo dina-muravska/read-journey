@@ -81,7 +81,7 @@ export const useAddBookToLibrary = () => {
         (books = []) =>
           books.some((book) => book._id === addedBook._id)
             ? books
-            : [addedBook, ...books],
+            : [...books, addedBook],
       );
       await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
       await queryClient.invalidateQueries({ queryKey: ["books"] });
@@ -118,7 +118,7 @@ export const useAddBookAsObjectToLibrary = () => {
         (books = []) =>
           books.some((book) => book._id === addedBook._id)
             ? books
-            : [addedBook, ...books],
+            : [...books, addedBook],
       );
       await queryClient.invalidateQueries({ queryKey: LIBRARY_QUERY_KEY });
       await queryClient.invalidateQueries({ queryKey: ["books"] });
