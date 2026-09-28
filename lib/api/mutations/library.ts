@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   addBookAsObjectToLibrary,
   addBookToLibrary,
+  fetchLibraryBooks,
   removeBookFromLibrary,
 } from "../clientApi";
 import { toast } from "sonner";
@@ -60,8 +61,10 @@ export const useAddBookToLibrary = () => {
       title: string;
       author: string;
     }) => {
-      const cachedBooks =
-        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
+      const cachedBooks = await queryClient.fetchQuery({
+        queryKey: LIBRARY_QUERY_KEY,
+        queryFn: fetchLibraryBooks,
+      });
 
       if (isBookInLibrary(cachedBooks, title, author)) {
         throw new Error(
@@ -87,8 +90,10 @@ export const useAddBookAsObjectToLibrary = () => {
 
   return useMutation({
     mutationFn: async (book: BookObject) => {
-      const cachedBooks =
-        queryClient.getQueryData<BookDetailsResponse[]>(LIBRARY_QUERY_KEY);
+      const cachedBooks = await queryClient.fetchQuery({
+        queryKey: LIBRARY_QUERY_KEY,
+        queryFn: fetchLibraryBooks,
+      });
 
       if (isBookInLibrary(cachedBooks, book.title, book.author)) {
         throw new Error(

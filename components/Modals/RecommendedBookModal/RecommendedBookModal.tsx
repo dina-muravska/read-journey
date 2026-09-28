@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import BookModal from "@/components/Modals/BookModal/BookModal";
-import { addBookToLibrary } from "@/lib/api/clientApi";
+import { useAddBookToLibrary } from "@/lib/api/mutations/library";
 import { RecommendedBook } from "@/types/book";
 import styles from "./RecommendedBookModal.module.css";
 
@@ -19,6 +19,7 @@ export default function RecommendedBookModal({ books }: Props) {
   const book = bookId ? books.find((b) => b._id === bookId) : undefined;
 
   const [isPending, setIsPending] = useState(false);
+  const { mutateAsync: addBook } = useAddBookToLibrary();
 
   const handleClose = () => {
     const params = new URLSearchParams(searchParams.toString());
@@ -32,7 +33,7 @@ export default function RecommendedBookModal({ books }: Props) {
     try {
       setIsPending(true);
 
-      await addBookToLibrary(bookId);
+      await addBook({ bookId, title: book.title, author: book.author });
 
       handleClose();
       router.refresh();
