@@ -17,7 +17,7 @@ Read Journey is a web application designed for tracking personal reading activit
 
 - **React / Next.js (TypeScript)** — App Router routing and strongly typed component architecture
 - **React Query (TanStack Query)** — data-fetching, caching, and server state management
-- **Formik & Yup** — form handling, management, and schema-based validation
+- **Yup** — form  schema-based validation
 - **CSS3 / CSS Modules** — custom modular styling without third-party utility frameworks
 - **Axios** — HTTP requests
 - **iziToast / React Hot Toast** — notification library
